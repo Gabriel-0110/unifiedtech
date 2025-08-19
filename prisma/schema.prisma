@@ -1,0 +1,189 @@
+// UnifiedTech Prisma schema (Supabase Postgres)
+// Keep models from legacy project (can prune later).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String?
+  firstName     String?
+  lastName      String?
+  role          String   @default("USER")
+  isActive      Boolean  @default(true)
+  emailVerified Boolean  @default(false)
+  emailVerificationToken String? @unique
+  passwordResetToken String?     @unique
+  passwordResetExpiry DateTime?
+  lastLogin     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  blogPosts     BlogPost[]
+  sessions      Session[]
+  analytics     Analytics[]
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  token        String   @unique
+  refreshToken String?  @unique
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("sessions")
+}
+
+model Contact {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String?
+  company     String?
+  projectType String
+  budget      String?
+  message     String
+  newsletter  Boolean  @default(false)
+  status      String   @default("NEW")
+  source      String?
+  medium      String?
+  campaign    String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lead        Lead?
+  @@map("contacts")
+}
+
+model Newsletter {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  firstName       String?
+  lastName        String?
+  status          String   @default("PENDING")
+  source          String?
+  tags            String?
+  confirmationToken String? @unique
+  confirmedAt     DateTime?
+  unsubscribedAt  DateTime?
+  unsubscribeToken String? @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  @@map("newsletters")
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  status      String   @default("DRAFT")
+  authorId    String
+  category    String?
+  tags        String?
+  views       Int      @default(0)
+  readTime    Int?
+  seoTitle    String?
+  seoDescription String?
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author User @relation(fields: [authorId], references: [id])
+  @@map("blog_posts")
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  contactId   String   @unique
+  score       Int      @default(0)
+  stage       String   @default("NEW")
+  assignedTo  String?
+  notes       String?
+  nextFollowUp DateTime?
+  closedAt    DateTime?
+  closeReason String?
+  estimatedValue Float?
+  actualValue    Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  contact Contact @relation(fields: [contactId], references: [id])
+  @@map("leads")
+}
+
+model Upload {
+  id           String   @id @default(cuid())
+  originalName String
+  fileName     String   @unique
+  mimeType     String
+  size         Int
+  path         String
+  uploadType   String   @default("DOCUMENT")
+  associatedId String?
+  associatedType String?
+  metadata     String?
+  isPublic     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("uploads")
+}
+
+model Analytics {
+  id         String   @id @default(cuid())
+  userId     String?
+  sessionId  String?
+  event      String
+  page       String?
+  data       String?
+  userAgent  String?
+  ipAddress  String?
+  referer    String?
+  timestamp  DateTime  @default(now())
+  user User? @relation(fields: [userId], references: [id])
+  @@map("analytics")
+}
+
+model Meeting {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  timezone    String   @default("UTC")
+  status      String   @default("SCHEDULED")
+  meetingType String
+  attendeeEmail String
+  attendeeName  String
+  attendeePhone String?
+  notes       String?
+  meetingUrl  String?
+  reminderSent Boolean  @default(false)
+  cancelledAt DateTime?
+  cancelReason String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  @@map("meetings")
+}
+
+model Config {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  type      String   @default("string")
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("config")
+}
