@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: process.env.SITE_NAME || 'UnifiedTech Solutions',
+  title: process.env.SITE_NAME || 'UnifiedTech Solutions by G&G',
   description: process.env.SITE_DESCRIPTION || 'Cutting-edge technology solutions for modern businesses',
 }
 
