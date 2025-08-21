@@ -8,10 +8,10 @@ import FAQSection from '@/components/pages/contact/FAQSection'
 
 export const metadata: Metadata = {
   title: 'Contact Us - Get in Touch Today',
-  description: 'Ready to start your project? Contact UnifiedTech Solutions for a free consultation. Multiple ways to reach us including phone, email, and live chat support.',
+  description: 'Ready to start your project? Contact GG Unified Tech for a free consultation. Multiple ways to reach us including phone, email, and live chat support.',
   openGraph: {
-    title: 'Contact UnifiedTech Solutions - Get in Touch Today',
-    description: 'Ready to start your project? Contact UnifiedTech Solutions for a free consultation. Multiple ways to reach us including phone, email, and live chat support.',
+    title: 'Contact GG Unified Tech - Get in Touch Today',
+    description: 'Ready to start your project? Contact GG Unified Tech for a free consultation. Multiple ways to reach us including phone, email, and live chat support.',
   },
 }
 

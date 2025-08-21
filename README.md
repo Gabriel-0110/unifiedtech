@@ -1,6 +1,6 @@
-## UnifiedTech Website (Reorganized)
+## GG Unified Tech Solutions Website
 
-Modern Next.js 15 + React 19 website migrated from legacy codebase, cleaned and structured while preserving original design & functionality.
+Professional technology services website built with modern Next.js stack for delivering cutting-edge solutions to businesses.
 
 ### Stack
 

@@ -2,7 +2,7 @@
 import React from 'react'
 
 const locations = [
-  { name: 'San Francisco Office', address: '123 Tech Street, San Francisco, CA 94105', phone: '+1 (555) 123-4567', hours: 'Mon-Fri 9AM-6PM PST', isPrimary: true },
+  { name: 'Albany Office', address: 'Albany, NY', phone: '+1 (929) 715-3656', hours: 'Mon-Fri 9AM-6PM EST', isPrimary: true },
   { name: 'Remote Teams', address: 'Available worldwide', phone: 'Same contact number', hours: 'Flexible timezone coverage', isPrimary: false },
 ] as const
 
@@ -12,7 +12,7 @@ export function LocationMap() {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mb-12 text-center'>
           <h2 className='mb-4 text-4xl font-bold text-gray-900 dark:text-gray-100'>Our Locations</h2>
-          <p className='text-lg text-gray-600 dark:text-gray-300'>We're based in San Francisco with remote teams worldwide</p>
+          <p className='text-lg text-gray-600 dark:text-gray-300'>We're based in Albany, NY with remote teams worldwide</p>
         </div>
         <div className='grid grid-cols-1 items-start gap-12 lg:grid-cols-2'>
           <div>
@@ -20,7 +20,7 @@ export function LocationMap() {
               <div className='absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20' />
               <div className='relative z-10 text-center'>
                 <span className='mb-4 block text-4xl'>📍</span>
-                <h3 className='mb-2 text-xl font-bold text-gray-900 dark:text-gray-100'>San Francisco, CA</h3>
+                <h3 className='mb-2 text-xl font-bold text-gray-900 dark:text-gray-100'>Albany, NY</h3>
                 <p className='text-gray-600 dark:text-gray-400'>Interactive map coming soon</p>
               </div>
             </div>

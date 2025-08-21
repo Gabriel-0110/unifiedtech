@@ -53,7 +53,7 @@ export function FAQSection() {
               </div>
               <div className='space-y-4'>
                 <a href='/contact' className='block w-full rounded-lg bg-blue-600 px-4 py-2 text-center text-white transition-colors hover:bg-blue-700'>Contact Our Team</a>
-                <a href='mailto:hello@ggunifiedtech.com' className='block w-full rounded-lg border border-gray-300 px-4 py-2 text-center text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'>Send Email</a>
+                <a href='mailto:info@ggunifiedtech.com' className='block w-full rounded-lg border border-gray-300 px-4 py-2 text-center text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'>Send Email</a>
               </div>
               <div className='mt-6 border-t border-gray-200 pt-6 dark:border-gray-700'>
                 <div className='text-center'>

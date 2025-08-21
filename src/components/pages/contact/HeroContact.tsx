@@ -2,10 +2,10 @@
 import React from 'react'
 
 const contactMethods = [
-  { title: 'Call Us', value: '+1 (555) 123-4567', description: 'Mon-Fri 9AM-6PM PST', href: 'tel:+15551234567', icon: '📞' },
-  { title: 'Email Us', value: 'hello@ggunifiedtech.com', description: 'We respond within 24 hours', href: 'mailto:hello@ggunifiedtech.com', icon: '✉️' },
-  { title: 'Visit Us', value: 'San Francisco, CA', description: 'By appointment only', href: null, icon: '📍' },
-  { title: 'Business Hours', value: 'Mon-Fri 9AM-6PM', description: 'Pacific Standard Time', href: null, icon: '⏰' },
+  { title: 'Call Us', value: '+1 (929) 715-3656', description: 'Mon-Fri 9AM-6PM EST', href: 'tel:+19297153656', icon: '📞' },
+  { title: 'Email Us', value: 'info@ggunifiedtech.com', description: 'We respond within 24 hours', href: 'mailto:info@ggunifiedtech.com', icon: '✉️' },
+  { title: 'Visit Us', value: 'Albany, NY', description: 'By appointment only', href: null, icon: '📍' },
+  { title: 'Business Hours', value: 'Mon-Fri 9AM-6PM', description: 'Eastern Standard Time', href: null, icon: '⏰' },
 ] as const
 
 export function HeroContact() {

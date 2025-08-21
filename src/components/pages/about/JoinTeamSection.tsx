@@ -34,7 +34,7 @@ export function JoinTeamSection() {
             <Text className='mx-auto mb-8 max-w-2xl text-slate-600 dark:text-slate-300'>Even if you don't see an open role that matches your exact profile, feel free to reach out. We regularly create positions for exceptional people who bring unique value.</Text>
             <div className='flex flex-wrap justify-center gap-4'>
               <Link href='/contact' className='rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'>Open Roles</Link>
-              <a href='mailto:careers@unifiedtech.example' className='rounded-lg border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800'>Email Careers</a>
+              <a href='mailto:careers@ggunifiedtech.com' className='rounded-lg border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800'>Email Careers</a>
             </div>
           </Card>
         </div>

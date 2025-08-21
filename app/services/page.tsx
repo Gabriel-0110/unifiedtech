@@ -7,10 +7,10 @@ import { Card } from '@/components/ui/Card'
 
 export const metadata: Metadata = {
   title: 'Our Services - Comprehensive Technology Solutions',
-  description: "Explore UnifiedTech Solutions' comprehensive range of technology services including web development, cloud solutions, AI integration, and digital transformation consulting.",
+  description: "Explore GG Unified Tech's comprehensive range of technology services including web development, cloud solutions, AI integration, and digital transformation consulting.",
   openGraph: {
-    title: 'UnifiedTech Services - Comprehensive Technology Solutions',
-    description: "Explore UnifiedTech Solutions' comprehensive range of technology services including web development, cloud solutions, AI integration, and digital transformation consulting.",
+    title: 'GG Unified Tech Services - Comprehensive Technology Solutions',
+    description: "Explore GG Unified Tech's comprehensive range of technology services including web development, cloud solutions, AI integration, and digital transformation consulting.",
   },
 }
 
