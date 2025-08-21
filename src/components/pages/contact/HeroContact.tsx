@@ -2,7 +2,7 @@
 import React from 'react'
 
 const contactMethods = [
-  { title: 'Call Us', value: '+1 (929) 715-3656', description: 'Mon-Fri 9AM-6PM EST', href: 'tel:+19297153656', icon: '📞' },
+  { title: 'Call Us', value: '++18556403636', description: 'Mon-Fri 9AM-6PM EST', href: 'tel:+18556403636', icon: '📞' },
   { title: 'Email Us', value: 'info@ggunifiedtech.com', description: 'We respond within 24 hours', href: 'mailto:info@ggunifiedtech.com', icon: '✉️' },
   { title: 'Visit Us', value: 'Albany, NY', description: 'By appointment only', href: null, icon: '📍' },
   { title: 'Business Hours', value: 'Mon-Fri 9AM-6PM', description: 'Eastern Standard Time', href: null, icon: '⏰' },

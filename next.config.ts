@@ -46,7 +46,7 @@ const nextConfig: NextConfig = {
     ]
   },
   env: {
-    SITE_NAME: 'GG Unified Tech',
+    SITE_NAME: 'Unified Tech Solutions by G&G',
     SITE_DESCRIPTION: 'Professional technology solutions for modern businesses',
     SITE_URL: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://ggunifiedtech.com',
   },

@@ -10,11 +10,11 @@ import { CTASection } from '../../src/components/sections/CTASection'
 export const metadata: Metadata = {
   title: 'Case Studies - Real Success Stories',
   description:
-    'Explore real-world examples of how GG Unified Tech has helped businesses transform through technology. See detailed case studies with measurable results.',
+    'Explore real-world examples of how UnifiedTech Solutions has helped businesses transform through technology. See detailed case studies with measurable results.',
   openGraph: {
-    title: 'GG Unified Tech Case Studies - Real Success Stories',
+    title: 'UnifiedTech Solutions Case Studies - Real Success Stories',
     description:
-      'Explore real-world examples of how GG Unified Tech has helped businesses transform through technology. See detailed case studies with measurable results.',
+      'Explore real-world examples of how UnifiedTech Solutions has helped businesses transform through technology. See detailed case studies with measurable results.',
   },
 }
 

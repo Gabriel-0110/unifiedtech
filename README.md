@@ -1,4 +1,4 @@
-## GG Unified Tech Solutions Website
+## UnifiedTech Solutions by G&G
 
 Professional technology services website built with modern Next.js stack for delivering cutting-edge solutions to businesses.
 

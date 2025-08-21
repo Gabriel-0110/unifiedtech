@@ -73,7 +73,7 @@ export function ContactForm() {
           </div>
           <div>
             <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>Phone Number</label>
-            <input name='phone' value={formData.phone} onChange={handleChange} placeholder='+1 (929) 715-3656' className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100' />
+            <input name='phone' value={formData.phone} onChange={handleChange} placeholder='+18556403636' className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100' />
           </div>
         </div>
         <div>

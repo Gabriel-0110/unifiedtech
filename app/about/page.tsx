@@ -8,8 +8,8 @@ import CultureSection from '@/components/pages/about/CultureSection'
 import JoinTeamSection from '@/components/pages/about/JoinTeamSection'
 
 export const metadata: Metadata = {
-  title: 'About Us | GG Unified Tech',
-  description: 'Learn about GG Unified Tech — our mission, vision, team, and the values that drive our work building modern digital solutions.',
+  title: 'About Us | UnifiedTech Solutions by G&G',
+  description: 'Learn about UnifiedTech Solutions — our mission, vision, team, and the values that drive our work building modern digital solutions.',
 }
 
 export default function AboutPage() {

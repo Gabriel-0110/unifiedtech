@@ -2,7 +2,7 @@
 import React from 'react'
 
 const locations = [
-  { name: 'Albany Office', address: 'Albany, NY', phone: '+1 (929) 715-3656', hours: 'Mon-Fri 9AM-6PM EST', isPrimary: true },
+  { name: 'Albany Office', address: 'Albany, NY', phone: '+18556403636', hours: 'Mon-Fri 9AM-6PM EST', isPrimary: true },
   { name: 'Remote Teams', address: 'Available worldwide', phone: 'Same contact number', hours: 'Flexible timezone coverage', isPrimary: false },
 ] as const
 

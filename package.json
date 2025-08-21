@@ -1,8 +1,8 @@
 {
-  "name": "unifiedtech",
+  "name": "ggunifiedtech",
   "version": "1.0.0",
   "private": true,
-  "description": "GG Unified Tech Solutions - Professional technology services for modern businesses",
+  "description": "UnifiedTech Solutions by G&G - Professional technology services for modern businesses",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
