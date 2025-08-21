@@ -22,6 +22,17 @@ jobs:
       # If you want to clone the repository as part of your setup steps, for example to install dependencies, you'll need the `contents: read` permission. If you don't clone the repository in your setup steps, Copilot will do this for you automatically after the steps complete.
       contents: read
 
+    # Environment variables for the setup
+    env:
+      # Test database URL for CI/CD - using SQLite for simplicity in CI
+      DATABASE_URL: "file:./dev.db"
+      DIRECT_URL: "file:./dev.db"
+      # Mock environment variables for build process
+      NEXT_PUBLIC_SUPABASE_URL: "http://localhost:54321"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "mock-anon-key-for-ci"
+      SUPABASE_SERVICE_ROLE_KEY: "mock-service-role-key-for-ci"
+      NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+
     # You can define any steps you want, and they will run before the agent starts.
     # If you do not check out your code, Copilot will do this for you.
     steps:
@@ -36,3 +47,42 @@ jobs:
 
       - name: Install JavaScript dependencies
         run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Create test database
+        run: npx prisma db push --skip-generate
+
+      - name: Build Next.js application
+        run: npm run build
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run type checking
+        run: npx tsc --noEmit
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Verify project structure
+        run: |
+          echo "Checking project structure..."
+          ls -la
+          echo "App directory:"
+          ls -la app/
+          echo "Components directory:"
+          ls -la src/components/
+          echo "Prisma schema:"
+          cat
