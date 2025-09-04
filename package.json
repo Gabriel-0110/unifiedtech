@@ -19,7 +19,7 @@
     "prepare": "prisma generate"
   },
   "engines": {
-    "node": ">=18.18.0 <21",
+    "node": ">=18.18.0",
     "npm": ">=9"
   },
   "dependencies": {
