@@ -21,6 +21,11 @@ export function ContactInfo() {
       <div className='space-y-12'>
         <div>
           <h2 className='mb-6 text-3xl font-bold text-gray-900 dark:text-gray-100'>Why Choose UnifiedTech?</h2>
+          <div className='mb-4 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20'>
+            <p className='text-sm font-medium text-blue-700 dark:text-blue-300'>Legal Business Entity:</p>
+            <p className='text-sm text-blue-600 dark:text-blue-400 font-mono'>ALVES & ARAUJO TOURISM SERVICES, LLC</p>
+            <p className='text-xs text-blue-500 dark:text-blue-500 mt-1'>DBA: UnifiedTech Solutions by G&G</p>
+          </div>
           <div className='space-y-6'>
             {benefits.map(b => (
               <div key={b.title} className='flex items-start space-x-4'>

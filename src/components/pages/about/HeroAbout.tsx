@@ -22,6 +22,11 @@ export const HeroAbout = () => {
             <Heading level={1} className='mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-bold text-transparent lg:text-5xl'>
               Pioneering the Future of Technology
             </Heading>
+            <div className='mb-4 flex justify-start'>
+              <span className='text-sm font-medium text-gray-600 dark:text-gray-400 tracking-wider'>
+                A division of ALVES & ARAUJO TOURISM SERVICES, LLC
+              </span>
+            </div>
             <Text variant='large' className='mb-8 text-gray-700 dark:text-gray-300'>
               We're not just another tech company. We're innovators, problem-solvers, and partners in your digital transformation journey.
             </Text>

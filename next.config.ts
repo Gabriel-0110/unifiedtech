@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
   },
   env: {
     SITE_NAME: 'Unified Tech Solutions by G&G',
-    SITE_DESCRIPTION: 'Professional technology solutions for modern businesses',
+    SITE_DESCRIPTION: 'Professional technology solutions for modern businesses. A division of ALVES & ARAUJO TOURISM SERVICES, LLC',
     SITE_URL: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://ggunifiedtech.com',
   },
   typescript: { ignoreBuildErrors: false },

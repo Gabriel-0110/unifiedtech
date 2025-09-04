@@ -18,6 +18,11 @@ export function HeroContact() {
             <span className='text-sm font-medium text-blue-700 dark:text-blue-300'>Get in Touch</span>
           </div>
           <h1 className='mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-bold text-transparent lg:text-5xl'>Let's Start Your Project Today</h1>
+          <div className='mb-4 flex justify-center'>
+            <span className='text-sm font-medium text-gray-600 dark:text-gray-400 tracking-wider'>
+              A division of ALVES & ARAUJO TOURISM SERVICES, LLC
+            </span>
+          </div>
           <p className='mx-auto mb-8 max-w-3xl text-xl text-gray-700 dark:text-gray-300'>Ready to transform your business with cutting-edge technology? We're here to help turn your vision into reality. Get in touch with our expert team for a free consultation.</p>
           <div className='mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4'>
             {contactMethods.map(method => {

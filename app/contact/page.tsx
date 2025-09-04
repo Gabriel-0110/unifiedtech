@@ -8,10 +8,10 @@ import FAQSection from '@/components/pages/contact/FAQSection'
 
 export const metadata: Metadata = {
   title: 'Contact Us - UnifiedTech Solutions by G&G',
-  description: 'Ready to start your project? Contact UnifiedTech Solutions for a free consultation. Multiple ways to reach us including phone, email, and live chat support.',
+  description: 'Ready to start your project? Contact UnifiedTech Solutions by G&G for a free consultation. A division of ALVES & ARAUJO TOURISM SERVICES, LLC.',
   openGraph: {
     title: 'Contact UnifiedTech Solutions - Get in Touch Today',
-    description: 'Ready to start your project? Contact UnifiedTech Solutions for a free consultation. Multiple ways to reach us including phone, email, and live chat support.',
+    description: 'Ready to start your project? Contact UnifiedTech Solutions by G&G for a free consultation. A division of ALVES & ARAUJO TOURISM SERVICES, LLC.',
   },
 }
 

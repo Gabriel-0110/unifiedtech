@@ -27,6 +27,11 @@ export const HeroSection = () => {
             <h1 className='mx-auto mb-6 max-w-4xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl lg:text-6xl'>
               Cutting-Edge Technology Solutions for Modern Businesses
             </h1>
+            <div className='mb-4 flex justify-center'>
+              <span className='text-sm font-medium text-gray-600 dark:text-gray-400 tracking-wider'>
+                A division of ALVES & ARAUJO TOURISM SERVICES, LLC
+              </span>
+            </div>
             <p className='mx-auto mb-8 max-w-3xl text-xl text-gray-700 dark:text-gray-300'>
               We deliver innovative web development, cloud services, AI integration, and digital transformation consulting that drives real results for your business.
             </p>

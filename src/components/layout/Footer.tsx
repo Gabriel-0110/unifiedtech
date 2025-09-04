@@ -89,7 +89,10 @@ export const Footer = () => {
         </div>
         <div className='border-t border-gray-800 py-8'>
           <div className='flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0'>
-            <p className='text-sm text-gray-400'>© {currentYear} UnifiedTech Solutions by G&G. All rights reserved.</p>
+            <div className='text-center md:text-left'>
+              <p className='text-sm text-gray-400'>© {currentYear} UnifiedTech Solutions by G&G. All rights reserved.</p>
+              <p className='text-xs text-gray-500'>A DBA of ALVES & ARAUJO TOURISM SERVICES, LLC</p>
+            </div>
             <div className='flex items-center space-x-6'>
               <Link href='/privacy' className='text-sm text-gray-400 transition-colors hover:text-white'>Privacy</Link>
               <Link href='/terms' className='text-sm text-gray-400 transition-colors hover:text-white'>Terms</Link>
