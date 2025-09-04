@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import NewsletterForm from '@/components/forms/NewsletterForm'
 
 const footerSections: Record<string, { title: string; links: { name: string; href: string }[] }> = {
   services: {
@@ -77,14 +78,7 @@ export const Footer = () => {
             ))}
           </div>
           <div className='mb-12 rounded-2xl bg-gray-800 p-8'>
-            <div className='max-w-2xl'>
-              <h3 className='mb-2 text-xl font-semibold text-white'>Stay Updated</h3>
-              <p className='mb-6 text-gray-300'>Get the latest insights on technology trends, best practices, and industry news delivered to your inbox.</p>
-              <div className='flex flex-col gap-4 sm:flex-row'>
-                <input type='email' placeholder='Enter your email' className='flex-1 rounded-lg border border-gray-600 bg-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500' />
-                <button className='rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700'>Subscribe</button>
-              </div>
-            </div>
+            <NewsletterForm />
           </div>
         </div>
         <div className='border-t border-gray-800 py-8'>

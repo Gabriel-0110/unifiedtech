@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 interface FormState {
   firstName: string
@@ -9,6 +10,7 @@ interface FormState {
   company: string
   projectType: string
   message: string
+  smsOptIn: boolean
 }
 
 export function ContactForm() {
@@ -22,11 +24,16 @@ export function ContactForm() {
     company: '',
     projectType: '',
     message: '',
+    smsOptIn: false,
   })
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    const { name, value, type } = e.target
+    const checked = (e.target as HTMLInputElement).checked
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
+    }))
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -41,7 +48,7 @@ export function ContactForm() {
       })
       if (!res.ok) throw new Error('Submission failed')
       setStatus({ type: 'success', message: 'Message sent successfully!' })
-      setFormData({ firstName: '', lastName: '', email: '', phone: '', company: '', projectType: '', message: '' })
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', company: '', projectType: '', message: '', smsOptIn: false })
     } catch (err: any) {
       setStatus({ type: 'error', message: err.message || 'Something went wrong' })
     } finally {
@@ -95,6 +102,30 @@ export function ContactForm() {
         <div>
           <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>Project Details *</label>
             <textarea required name='message' value={formData.message} onChange={handleChange} rows={5} placeholder='Tell us about your project, goals, timeline, and any specific requirements...' className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100' />
+        </div>
+        <div className='rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800'>
+          <div className='flex items-start space-x-3'>
+            <input
+              type='checkbox'
+              id='smsOptIn'
+              name='smsOptIn'
+              checked={formData.smsOptIn}
+              onChange={handleChange}
+              className='mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700'
+            />
+            <div className='flex-1'>
+              <label htmlFor='smsOptIn' className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+                Yes, I would like to receive SMS text messages from UnifiedTech Solutions
+              </label>
+              <p className='mt-1 text-xs text-gray-600 dark:text-gray-400'>
+                By checking this box, you consent to receive SMS messages from ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G) including service updates, appointment reminders, and occasional promotional messages. Message frequency: up to 10 messages per month. Message and data rates may apply. You can opt-out anytime by replying STOP. For help, reply HELP or contact us at info@ggunifiedtech.com or +1 (929) 715-3656. Consent is not required to purchase our services.
+              </p>
+              <p className='mt-2 text-xs text-blue-600 dark:text-blue-400'>
+                <Link href='/privacy' className='underline hover:no-underline'>View our SMS Privacy Policy</Link> and{' '}
+                <Link href='/terms' className='underline hover:no-underline'>SMS Terms of Service</Link>
+              </p>
+            </div>
+          </div>
         </div>
         <button type='submit' disabled={isSubmitting} className='w-full rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700 disabled:opacity-50'>
           {isSubmitting ? 'Sending Message...' : 'Send Message'}
