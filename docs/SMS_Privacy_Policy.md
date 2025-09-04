@@ -10,6 +10,7 @@
 This SMS Privacy Policy explains how ALVES & ARAUJO TOURISM SERVICES, LLC, doing business as UnifiedTech Solutions by G&G ("we," "us," or "our"), collects, uses, and protects your personal information when you participate in our SMS text messaging program.
 
 **Business Information:**
+
 - **Legal Entity:** ALVES & ARAUJO TOURISM SERVICES, LLC
 - **DBA:** UnifiedTech Solutions by G&G
 - **Address:** Albany, NY
@@ -18,6 +19,7 @@ This SMS Privacy Policy explains how ALVES & ARAUJO TOURISM SERVICES, LLC, doing
 ## 2. SMS Program Overview
 
 Our SMS program allows you to receive:
+
 - **Service Updates:** Information about our technology services and project updates
 - **Appointment Reminders:** Notifications about scheduled consultations and meetings
 - **Customer Support:** Responses to your inquiries and assistance requests
@@ -26,6 +28,7 @@ Our SMS program allows you to receive:
 ## 3. Information We Collect
 
 When you opt-in to our SMS program, we collect:
+
 - **Phone Number:** Your mobile phone number for message delivery
 - **Consent Records:** Documentation of your opt-in consent and preferences
 - **Communication History:** Records of messages sent and received
@@ -35,6 +38,7 @@ When you opt-in to our SMS program, we collect:
 ## 4. Legal Basis for SMS Processing
 
 We process your SMS data based on:
+
 - **Consent:** Your explicit opt-in consent for marketing and promotional messages
 - **Legitimate Interest:** Service-related communications necessary for our business relationship
 - **Contractual Necessity:** Communications required to fulfill our service agreements
@@ -42,6 +46,7 @@ We process your SMS data based on:
 ## 5. How We Use Your SMS Information
 
 Your SMS information is used to:
+
 - Send requested service updates and notifications
 - Provide customer support and respond to inquiries
 - Deliver appointment reminders and scheduling information
@@ -60,13 +65,16 @@ Your SMS information is used to:
 ## 7. Consent and Opt-In Process
 
 ### Express Written Consent Required
+
 To receive SMS messages, you must provide explicit consent by:
+
 - Checking the opt-in box on our website forms
 - Texting a keyword to our designated number
 - Providing verbal consent during phone conversations
 - Confirming consent through email verification
 
 ### Consent Requirements
+
 - You must be 18 years or older to provide consent
 - You must be the account holder or authorized user of the mobile number
 - Consent is not required to purchase our services
@@ -77,11 +85,13 @@ To receive SMS messages, you must provide explicit consent by:
 You can stop receiving SMS messages at any time:
 
 **Text Commands:**
+
 - Reply **STOP** to any message
 - Reply **UNSUBSCRIBE** to any message
 - Reply **QUIT** to any message
 
 **Other Methods:**
+
 - Email us at info@ggunifiedtech.com
 - Call us at +1 (929) 715-3656
 - Contact us through our website
@@ -91,6 +101,7 @@ You can stop receiving SMS messages at any time:
 ## 9. Help and Customer Support
 
 For assistance with our SMS program:
+
 - **Text HELP:** Reply HELP to any message for instructions
 - **Email:** info@ggunifiedtech.com
 - **Phone:** +1 (929) 715-3656
@@ -108,10 +119,12 @@ For assistance with our SMS program:
 ## 11. Supported Carriers and Device Requirements
 
 ### Supported Carriers
+
 - Verizon Wireless, AT&T, T-Mobile, Sprint (T-Mobile), US Cellular
 - Other participating carriers may be supported
 
 ### Device Requirements
+
 - Compatible mobile device with SMS capability
 - U.S. mobile phone number
 - Active service with a supported carrier
@@ -128,6 +141,7 @@ We do not sell, rent, or share your mobile phone number with third parties for t
 ## 13. Data Security and Protection
 
 We implement appropriate security measures to protect your SMS data:
+
 - **Encryption:** Data transmission and storage encryption
 - **Access Controls:** Limited access to authorized personnel only
 - **Monitoring:** Regular security monitoring and threat detection
@@ -136,6 +150,7 @@ We implement appropriate security measures to protect your SMS data:
 ## 14. Data Retention
 
 We retain your SMS data for:
+
 - **Active Subscribers:** While you remain opted-in to our SMS program
 - **Consent Records:** Minimum 4 years for TCPA compliance documentation
 - **Communication History:** Up to 2 years for customer service and quality purposes
@@ -152,7 +167,9 @@ Our SMS service is not intended for individuals under 18 years of age. We do not
 ## 17. TCPA and Regulatory Compliance
 
 ### Telephone Consumer Protection Act (TCPA)
+
 Our SMS program complies with TCPA requirements including:
+
 - Express written consent for marketing messages
 - Clear opt-out mechanisms (STOP keyword)
 - Immediate honor of opt-out requests
@@ -160,13 +177,16 @@ Our SMS program complies with TCPA requirements including:
 - Prohibition of auto-dialing without consent
 
 ### A2P 10DLC Compliance
+
 We adhere to Application-to-Person 10-Digit Long Code requirements:
+
 - Business registration with The Campaign Registry
 - Campaign approval and verification
 - Message content compliance
 - Throughput and volume limitations
 
 ### Additional Compliance
+
 - FCC Rules and Regulations
 - Carrier guidelines and requirements
 - State and federal privacy laws
@@ -175,6 +195,7 @@ We adhere to Application-to-Person 10-Digit Long Code requirements:
 ## 18. Changes to This Privacy Policy
 
 We may update this SMS Privacy Policy from time to time. Material changes will be communicated via:
+
 - SMS notification to active subscribers
 - Email notification to our mailing list
 - Website posting with prominent notice
@@ -198,7 +219,9 @@ DBA: UnifiedTech Solutions by G&G
 ## 20. Legal Rights and Remedies
 
 ### Your Rights
+
 You have the right to:
+
 - Access your SMS data and consent records
 - Correct inaccurate information
 - Request deletion of your data (subject to legal retention requirements)
@@ -206,7 +229,9 @@ You have the right to:
 - Seek legal remedies for TCPA violations
 
 ### TCPA Remedies
+
 Under the TCPA, you may be entitled to:
+
 - Damages of $500-$1,500 per violation
 - Injunctive relief to stop unwanted messages
 - Attorney's fees in successful legal actions
