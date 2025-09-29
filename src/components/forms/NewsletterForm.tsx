@@ -4,7 +4,8 @@ import Link from 'next/link'
 
 interface NewsletterFormState {
   email: string
-  smsOptIn: boolean
+  smsServiceOptIn: boolean
+  smsPromotionalOptIn: boolean
 }
 
 export function NewsletterForm() {
@@ -12,7 +13,8 @@ export function NewsletterForm() {
   const [status, setStatus] = useState<null | { type: 'success' | 'error'; message: string }>(null)
   const [formData, setFormData] = useState<NewsletterFormState>({
     email: '',
-    smsOptIn: false,
+    smsServiceOptIn: false,
+    smsPromotionalOptIn: false,
   })
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -36,7 +38,7 @@ export function NewsletterForm() {
       })
       if (!res.ok) throw new Error('Subscription failed')
       setStatus({ type: 'success', message: 'Successfully subscribed!' })
-      setFormData({ email: '', smsOptIn: false })
+      setFormData({ email: '', smsServiceOptIn: false, smsPromotionalOptIn: false })
     } catch (err: any) {
       setStatus({ type: 'error', message: err.message || 'Something went wrong' })
     } finally {
@@ -67,28 +69,57 @@ export function NewsletterForm() {
             {isSubmitting ? 'Subscribing...' : 'Subscribe'}
           </button>
         </div>
-        <div className='rounded-lg border border-gray-600 bg-gray-700 p-3'>
-          <div className='flex items-start space-x-3'>
-            <input
-              type='checkbox'
-              id='newsletter-sms-opt-in'
-              name='smsOptIn'
-              checked={formData.smsOptIn}
-              onChange={handleChange}
-              className='mt-0.5 h-4 w-4 rounded border-gray-500 text-blue-600 focus:ring-2 focus:ring-blue-500 bg-gray-600'
-            />
-            <div className='flex-1'>
-              <label htmlFor='newsletter-sms-opt-in' className='text-sm font-medium text-gray-300'>
-                Also send me SMS text notifications
-              </label>
-              <p className='mt-1 text-xs text-gray-400'>
-                By checking this box, you consent to receive SMS messages from ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G) including service updates and occasional promotional messages. Message frequency: up to 10 messages per month. Message and data rates may apply. You can opt-out anytime by replying STOP. For help, reply HELP or contact us at info@ggunifiedtech.com. Consent is not required to subscribe to our newsletter.
-              </p>
-              <p className='mt-2 text-xs text-blue-400'>
-                <Link href='/privacy' className='underline hover:no-underline'>SMS Privacy Policy</Link> and{' '}
-                <Link href='/terms' className='underline hover:no-underline'>SMS Terms of Service</Link>
-              </p>
+        <div className='space-y-3'>
+          {/* Service Messages Opt-in */}
+          <div className='rounded-lg border border-gray-600 bg-gray-700 p-3'>
+            <div className='flex items-start space-x-3'>
+              <input
+                type='checkbox'
+                id='newsletter-sms-service-opt-in'
+                name='smsServiceOptIn'
+                checked={formData.smsServiceOptIn}
+                onChange={handleChange}
+                className='mt-0.5 h-4 w-4 rounded border-gray-500 text-blue-600 focus:ring-2 focus:ring-blue-500 bg-gray-600'
+              />
+              <div className='flex-1'>
+                <label htmlFor='newsletter-sms-service-opt-in' className='text-sm font-medium text-gray-300'>
+                  ☐ Also send me SMS service notifications
+                </label>
+                <p className='mt-1 text-xs text-gray-400'>
+                  (Up to 6 msgs/month. Msg & data rates may apply. Reply STOP to unsubscribe or HELP for help.)
+                </p>
+              </div>
             </div>
+          </div>
+          
+          {/* Promotional Messages Opt-in */}
+          <div className='rounded-lg border border-gray-600 bg-gray-700 p-3'>
+            <div className='flex items-start space-x-3'>
+              <input
+                type='checkbox'
+                id='newsletter-sms-promotional-opt-in'
+                name='smsPromotionalOptIn'
+                checked={formData.smsPromotionalOptIn}
+                onChange={handleChange}
+                className='mt-0.5 h-4 w-4 rounded border-gray-500 text-blue-600 focus:ring-2 focus:ring-blue-500 bg-gray-600'
+              />
+              <div className='flex-1'>
+                <label htmlFor='newsletter-sms-promotional-opt-in' className='text-sm font-medium text-gray-300'>
+                  ☐ Also send me promotional SMS messages
+                </label>
+                <p className='mt-1 text-xs text-gray-400'>
+                  (Up to 4 msgs/month. Msg & data rates may apply. Reply STOP to unsubscribe or HELP for help.)
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* SMS Policy Links */}
+          <div className='text-center'>
+            <p className='text-xs text-blue-400'>
+              <Link href='/privacy' className='underline hover:no-underline'>SMS Privacy Policy</Link> and{' '}
+              <Link href='/terms' className='underline hover:no-underline'>SMS Terms of Service</Link>
+            </p>
           </div>
         </div>
         {status && (

@@ -10,7 +10,8 @@ interface FormState {
   company: string
   projectType: string
   message: string
-  smsOptIn: boolean
+  smsServiceOptIn: boolean
+  smsPromotionalOptIn: boolean
 }
 
 export function ContactForm() {
@@ -24,7 +25,8 @@ export function ContactForm() {
     company: '',
     projectType: '',
     message: '',
-    smsOptIn: false,
+    smsServiceOptIn: false,
+    smsPromotionalOptIn: false,
   })
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
@@ -48,7 +50,7 @@ export function ContactForm() {
       })
       if (!res.ok) throw new Error('Submission failed')
       setStatus({ type: 'success', message: 'Message sent successfully!' })
-      setFormData({ firstName: '', lastName: '', email: '', phone: '', company: '', projectType: '', message: '', smsOptIn: false })
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', company: '', projectType: '', message: '', smsServiceOptIn: false, smsPromotionalOptIn: false })
     } catch (err: any) {
       setStatus({ type: 'error', message: err.message || 'Something went wrong' })
     } finally {
@@ -103,28 +105,57 @@ export function ContactForm() {
           <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>Project Details *</label>
             <textarea required name='message' value={formData.message} onChange={handleChange} rows={5} placeholder='Tell us about your project, goals, timeline, and any specific requirements...' className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100' />
         </div>
-        <div className='rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800'>
-          <div className='flex items-start space-x-3'>
-            <input
-              type='checkbox'
-              id='smsOptIn'
-              name='smsOptIn'
-              checked={formData.smsOptIn}
-              onChange={handleChange}
-              className='mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700'
-            />
-            <div className='flex-1'>
-              <label htmlFor='smsOptIn' className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                Yes, I would like to receive SMS text messages from UnifiedTech Solutions
-              </label>
-              <p className='mt-1 text-xs text-gray-600 dark:text-gray-400'>
-                By checking this box, you consent to receive SMS messages from ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G) including service updates, appointment reminders, and occasional promotional messages. Message frequency: up to 10 messages per month. Message and data rates may apply. You can opt-out anytime by replying STOP. For help, reply HELP or contact us at info@ggunifiedtech.com or +1 (929) 715-3656. Consent is not required to purchase our services.
-              </p>
-              <p className='mt-2 text-xs text-blue-600 dark:text-blue-400'>
-                <Link href='/privacy' className='underline hover:no-underline'>View our SMS Privacy Policy</Link> and{' '}
-                <Link href='/terms' className='underline hover:no-underline'>SMS Terms of Service</Link>
-              </p>
+        <div className='space-y-4'>
+          {/* Service Messages Opt-in */}
+          <div className='rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800'>
+            <div className='flex items-start space-x-3'>
+              <input
+                type='checkbox'
+                id='smsServiceOptIn'
+                name='smsServiceOptIn'
+                checked={formData.smsServiceOptIn}
+                onChange={handleChange}
+                className='mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700'
+              />
+              <div className='flex-1'>
+                <label htmlFor='smsServiceOptIn' className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+                  ☐ Yes, I would like to receive SMS text messages related to service reminders, appointment updates, and account notifications from UnifiedTech Solutions.
+                </label>
+                <p className='mt-1 text-xs text-gray-600 dark:text-gray-400'>
+                  (Up to 6 msgs/month. Msg & data rates may apply. Reply STOP to unsubscribe or HELP for help. Consent is not required to purchase.)
+                </p>
+              </div>
             </div>
+          </div>
+          
+          {/* Promotional Messages Opt-in */}
+          <div className='rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800'>
+            <div className='flex items-start space-x-3'>
+              <input
+                type='checkbox'
+                id='smsPromotionalOptIn'
+                name='smsPromotionalOptIn'
+                checked={formData.smsPromotionalOptIn}
+                onChange={handleChange}
+                className='mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700'
+              />
+              <div className='flex-1'>
+                <label htmlFor='smsPromotionalOptIn' className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+                  ☐ Yes, I would like to receive promotional SMS messages about special offers, product updates, and marketing from UnifiedTech Solutions.
+                </label>
+                <p className='mt-1 text-xs text-gray-600 dark:text-gray-400'>
+                  (Up to 4 msgs/month. Msg & data rates may apply. Reply STOP to unsubscribe or HELP for help. Consent is not required to purchase.)
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          {/* SMS Policy Links */}
+          <div className='text-center'>
+            <p className='text-xs text-blue-600 dark:text-blue-400'>
+              <Link href='/privacy' className='underline hover:no-underline'>View our SMS Privacy Policy</Link> and{' '}
+              <Link href='/terms' className='underline hover:no-underline'>SMS Terms of Service</Link>
+            </p>
           </div>
         </div>
         <button type='submit' disabled={isSubmitting} className='w-full rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700 disabled:opacity-50'>
