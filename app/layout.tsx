@@ -4,7 +4,6 @@ import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { LiveChatWidget } from '@/components/chat/LiveChatWidget'
-import { CopilotWidget } from '@/components/chat/CopilotWidget'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +33,6 @@ export default function RootLayout({
         {children}
         <Footer />
         <LiveChatWidget />
-        <CopilotWidget />
       </body>
     </html>
   )
