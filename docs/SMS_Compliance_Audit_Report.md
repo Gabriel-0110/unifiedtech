@@ -2,7 +2,7 @@
 
 **Company:** ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G)
 
-**Report Date:** September 4, 2025
+**Report Date:** December 13, 2025
 
 **Auditor:** GitHub Copilot AI Compliance Assistant
 
@@ -73,7 +73,7 @@ All reviewed elements meet or exceed regulatory requirements as of the audit dat
 
 **Consent Language Review:**
 
-> "By checking this box, you consent to receive SMS messages from ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G) including service updates, appointment reminders, and occasional promotional messages. Message frequency: up to 10 messages per month. Message and data rates may apply. You can opt-out anytime by replying STOP. For help, reply HELP or contact us at info@ggunifiedtech.com or +1 (929) 715-3656. Consent is not required to purchase our services."
+> "By submitting this form, you consent to receive SMS messages from UnifiedTech Solutions by G&G at the phone number you provide. Messages may include service reminders and account-related notifications. Message frequency varies. Msg & data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase."
 
 **TCPA Compliance Assessment:** ✅ FULLY COMPLIANT
 
@@ -121,7 +121,7 @@ All reviewed elements meet or exceed regulatory requirements as of the audit dat
 
 - Legal business name: ALVES & ARAUJO TOURISM SERVICES, LLC
 - DBA relationship clearly stated: "DBA UnifiedTech Solutions by G&G"
-- Contact information provided: info@ggunifiedtech.com, +1 (929) 715-3656
+- Contact information provided: info@ggunifiedtech.com, +1 (855) 640-3636
 
 ## 4. SMS Terms of Service Audit ✅ PASS
 
@@ -217,7 +217,7 @@ All reviewed elements meet or exceed regulatory requirements as of the audit dat
 
 **Auto-Response Defined:**
 
-> "UnifiedTech SMS Help: Reply STOP to opt-out. Msg&Data rates may apply. Support: info@ggunifiedtech.com or +1 (929) 715-3656"
+> "UnifiedTech SMS Help: Reply STOP to opt-out. Msg&Data rates may apply. Support: info@ggunifiedtech.com or +1 (855) 640-3636"
 
 **TCPA Compliance Assessment:** ✅ FULLY COMPLIANT
 
@@ -233,7 +233,7 @@ All reviewed elements meet or exceed regulatory requirements as of the audit dat
 ### 8.2 Contact Information ✅ COMPLETE
 
 - ✅ Email: info@ggunifiedtech.com
-- ✅ Phone: +1 (929) 715-3656
+- ✅ Phone: +1 (855) 640-3636
 - ✅ Business Address: Albany, NY
 - ✅ Support Hours: Monday-Friday, 9 AM-6 PM EST
 

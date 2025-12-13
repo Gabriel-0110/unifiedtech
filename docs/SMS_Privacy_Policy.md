@@ -2,8 +2,8 @@
 
 **ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G)**
 
-**Effective Date:** September 4, 2025  
-**Last Updated:** September 4, 2025
+**Effective Date:** December 13, 2025  
+**Last Updated:** December 13, 2025
 
 ## 1. Introduction
 
@@ -14,16 +14,17 @@ This SMS Privacy Policy explains how ALVES & ARAUJO TOURISM SERVICES, LLC, doing
 - **Legal Entity:** ALVES & ARAUJO TOURISM SERVICES, LLC
 - **DBA:** UnifiedTech Solutions by G&G
 - **Address:** Albany, NY
-- **Contact:** info@ggunifiedtech.com | +1 (929) 715-3656
+- **Contact:** info@ggunifiedtech.com | +1 (855) 640-3636
 
 ## 2. SMS Program Overview
 
-Our SMS program allows you to receive:
+Our SMS program is intended for service-related, 1-to-1 conversational messaging only. Messages may include:
 
-- **Service Updates:** Information about our technology services and project updates
 - **Appointment Reminders:** Notifications about scheduled consultations and meetings
+- **Account Notifications:** Service updates and account-related information
 - **Customer Support:** Responses to your inquiries and assistance requests
-- **Marketing Messages:** Promotional content about our services (only with explicit consent)
+
+**Note:** This program does not include marketing or promotional content. Mobile phone numbers collected for SMS communications are used solely for service-related messaging and are not shared with third parties for marketing or promotional purposes.
 
 ## 3. Information We Collect
 
@@ -93,7 +94,7 @@ You can stop receiving SMS messages at any time:
 **Other Methods:**
 
 - Email us at info@ggunifiedtech.com
-- Call us at +1 (929) 715-3656
+- Call us at +1 (855) 640-3636
 - Contact us through our website
 
 **Processing Time:** Opt-out requests are processed immediately, though you may receive messages for up to 24 hours due to system processing delays.
@@ -104,10 +105,10 @@ For assistance with our SMS program:
 
 - **Text HELP:** Reply HELP to any message for instructions
 - **Email:** info@ggunifiedtech.com
-- **Phone:** +1 (929) 715-3656
+- **Phone:** +1 (855) 640-3636
 - **Support Hours:** Monday-Friday, 9 AM-6 PM EST
 
-**HELP Auto-Response:** "UnifiedTech SMS Help: Reply STOP to opt-out. Msg&Data rates may apply. Support: info@ggunifiedtech.com or +1 (929) 715-3656"
+**HELP Auto-Response:** "UnifiedTech SMS Help: Reply STOP to opt-out. Msg&Data rates may apply. Support: info@ggunifiedtech.com or +1 (855) 640-3636"
 
 ## 10. Message and Data Rates
 
@@ -211,7 +212,7 @@ For questions about this SMS Privacy Policy or our data practices:
 DBA: UnifiedTech Solutions by G&G
 
 - **Email:** info@ggunifiedtech.com
-- **Phone:** +1 (929) 715-3656
+- **Phone:** +1 (855) 640-3636
 - **Address:** Albany, NY
 - **Website:** https://ggunifiedtech.com
 - **Support Hours:** Monday-Friday, 9 AM-6 PM EST
@@ -238,10 +239,10 @@ Under the TCPA, you may be entitled to:
 
 ## 21. Effective Date and Governing Law
 
-This SMS Privacy Policy is effective as of September 4, 2025, and is governed by the laws of New York State and applicable federal law.
+This SMS Privacy Policy is effective as of December 13, 2025, and is governed by the laws of New York State and applicable federal law.
 
 ---
 
-**Document Version:** 1.0  
-**Last Review Date:** September 4, 2025  
-**Next Review Date:** March 4, 2026
+**Document Version:** 1.1  
+**Last Review Date:** December 13, 2025  
+**Next Review Date:** June 13, 2026

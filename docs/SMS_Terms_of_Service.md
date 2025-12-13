@@ -2,8 +2,8 @@
 
 **ALVES & ARAUJO TOURISM SERVICES, LLC (DBA UnifiedTech Solutions by G&G)**
 
-**Effective Date:** September 4, 2025  
-**Last Updated:** September 4, 2025
+**Effective Date:** December 13, 2025  
+**Last Updated:** December 13, 2025
 
 ## 1. Acceptance of Terms
 
@@ -11,12 +11,13 @@ By opting in to receive SMS text messages from ALVES & ARAUJO TOURISM SERVICES, 
 
 ## 2. Description of Service
 
-Our SMS program allows you to receive:
+Our SMS program is intended for service-related, 1-to-1 conversational messaging only. Messages may include:
 
-- **Service Updates:** Information about our technology services, project updates, and account notifications
 - **Appointment Reminders:** Reminders for scheduled consultations and meetings
-- **Marketing Messages:** Promotional information about our services (only with explicit consent)
+- **Account Notifications:** Service updates, project updates, and account-related information
 - **Customer Support:** Responses to your inquiries and support requests
+
+**Note:** This program does not include marketing or promotional content.
 
 ## 3. Opt-In Consent
 
@@ -24,10 +25,7 @@ Our SMS program allows you to receive:
 
 You must provide explicit consent to receive text messages by:
 
-- Checking the opt-in checkbox on our contact forms
-- Texting a keyword to our designated number
-- Providing verbal consent during phone conversations
-- Confirming your consent through email
+- Submitting your mobile phone number through our website contact form at https://ggunifiedtech.com/contact and providing explicit consent via an unchecked opt-in checkbox
 
 ### Consent Requirements
 
@@ -38,10 +36,9 @@ You must provide explicit consent to receive text messages by:
 
 ## 4. Message Frequency and Timing
 
-- **Frequency:** You may receive up to 10 text messages per month
+- **Frequency:** Message frequency varies based on service activity
 - **Timing:** Messages will be sent between 8 AM and 9 PM EST, Monday through Friday
 - **Emergency Messages:** Critical service notifications may be sent outside normal hours
-- **Promotional Messages:** Marketing messages limited to 4 per month maximum
 
 ## 5. Message and Data Rates
 
@@ -60,7 +57,7 @@ You can opt-out of our SMS program at any time using any of these methods:
 - **Text UNSUBSCRIBE:** Reply UNSUBSCRIBE to any text message
 - **Text QUIT:** Reply QUIT to any text message
 - **Email:** Send an email to info@ggunifiedtech.com
-- **Phone:** Call us at +1 (929) 715-3656
+- **Phone:** Call us at +1 (855) 640-3636
 
 ### Opt-Out Confirmation
 
@@ -76,12 +73,12 @@ For help with our SMS program:
 
 - **Text HELP:** Reply HELP to any message for instructions
 - **Email:** info@ggunifiedtech.com
-- **Phone:** +1 (929) 715-3656
+- **Phone:** +1 (855) 640-3636
 - **Hours:** Monday-Friday, 9 AM-6 PM EST
 
 ### HELP Auto-Response
 
-When you text HELP, you will receive: 'UnifiedTech SMS Help: Reply STOP to opt-out. Msg&Data rates may apply. Support: info@ggunifiedtech.com or +1 (929) 715-3656'
+When you text HELP, you will receive: 'UnifiedTech SMS Help: Reply STOP to opt-out. Msg&Data rates may apply. Support: info@ggunifiedtech.com or +1 (855) 640-3636'
 
 ## 8. Carrier and Device Requirements
 
@@ -177,7 +174,7 @@ DBA: UnifiedTech Solutions by G&G
 
 - **Business Address:** Albany, NY
 - **Email:** info@ggunifiedtech.com
-- **Phone:** +1 (929) 715-3656
+- **Phone:** +1 (855) 640-3636
 - **Website:** https://ggunifiedtech.com
 - **Support Hours:** Monday-Friday, 9 AM-6 PM EST
 
