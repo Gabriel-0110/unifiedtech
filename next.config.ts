@@ -51,16 +51,14 @@ const nextConfig: NextConfig = {
     SITE_URL: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://ggunifiedtech.com',
   },
   typescript: { ignoreBuildErrors: false },
-  eslint: { ignoreDuringBuilds: false },
-  webpack: (config: any) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
+  // Turbopack configuration for Next.js 16+
+  turbopack: {
+    resolveAlias: {
       '@': path.join(__dirname, 'src'),
       '@/components': path.join(__dirname, 'src/components'),
       '@/lib': path.join(__dirname, 'src/lib'),
       '@/types': path.join(__dirname, 'src/types'),
-    }
-    return config
+    },
   },
   output: 'standalone',
 }
