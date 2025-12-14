@@ -1,10 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 
 interface NewsletterFormState {
   email: string;
-  smsOptIn: boolean;
 }
 
 export function NewsletterForm() {
@@ -15,15 +13,13 @@ export function NewsletterForm() {
   }>(null);
   const [formData, setFormData] = useState<NewsletterFormState>({
     email: "",
-    smsOptIn: false,
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   }
 
@@ -39,7 +35,7 @@ export function NewsletterForm() {
       });
       if (!res.ok) throw new Error("Subscription failed");
       setStatus({ type: "success", message: "Successfully subscribed!" });
-      setFormData({ email: "", smsOptIn: false });
+      setFormData({ email: "" });
     } catch (err: any) {
       setStatus({
         type: "error",
@@ -75,49 +71,6 @@ export function NewsletterForm() {
           >
             {isSubmitting ? "Subscribing..." : "Subscribe"}
           </button>
-        </div>
-        <div className="space-y-3">
-          {/* SMS Service Opt-in - Compliant with Microsoft Teams UCAAS Low Volume */}
-          <div className="rounded-lg border border-gray-600 bg-gray-700 p-3">
-            <div className="flex items-start space-x-3">
-              <input
-                type="checkbox"
-                id="newsletter-sms-opt-in"
-                name="smsOptIn"
-                checked={formData.smsOptIn}
-                onChange={handleChange}
-                className="mt-0.5 h-4 w-4 rounded border-gray-500 text-blue-600 focus:ring-2 focus:ring-blue-500 bg-gray-600"
-              />
-              <div className="flex-1">
-                <label
-                  htmlFor="newsletter-sms-opt-in"
-                  className="text-sm font-medium text-gray-300"
-                >
-                  I agree to receive SMS messages as described below.
-                </label>
-                <p className="mt-1 text-xs text-gray-400">
-                  By checking this box, you consent to receive SMS messages from
-                  UnifiedTech Solutions by G&G. Messages may include service
-                  reminders and account-related notifications. Message frequency
-                  varies. Msg & data rates may apply. Reply STOP to opt out or
-                  HELP for help.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* SMS Policy Links */}
-          <div className="text-center">
-            <p className="text-xs text-blue-400">
-              <Link href="/privacy" className="underline hover:no-underline">
-                SMS Privacy Policy
-              </Link>{" "}
-              and{" "}
-              <Link href="/terms" className="underline hover:no-underline">
-                SMS Terms of Service
-              </Link>
-            </p>
-          </div>
         </div>
         {status && (
           <p

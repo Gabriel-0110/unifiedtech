@@ -92,13 +92,16 @@ export default function TermsPage() {
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">3. Opt-In Consent</h2>
-          <p>We require express consent before sending SMS messages.</p>
+          <p>
+            UnifiedTech Solutions by G&amp;G offers SMS messaging for
+            service-related communications only. Users opt in by submitting
+            their mobile phone number through our website contact form at
+            https://ggunifiedtech.com/contact and providing explicit consent via
+            an opt-in checkbox. SMS messages may include appointment reminders
+            and account-related notifications. Message frequency varies. Msg
+            &amp; data rates may apply. Reply STOP to opt out or HELP for help.
+          </p>
           <ul className="list-disc space-y-1 pl-6">
-            <li>
-              Opt in by submitting your mobile phone number through our website
-              contact form at https://ggunifiedtech.com/contact and providing
-              explicit consent via an unchecked opt-in checkbox
-            </li>
             <li>
               Participants must be 18 or older and authorized to use the mobile
               number

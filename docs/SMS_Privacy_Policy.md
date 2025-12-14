@@ -40,7 +40,7 @@ When you opt-in to our SMS program, we collect:
 
 We process your SMS data based on:
 
-- **Consent:** Your explicit opt-in consent for marketing and promotional messages
+- **Consent:** Your explicit opt-in consent for service-related SMS messages
 - **Legitimate Interest:** Service-related communications necessary for our business relationship
 - **Contractual Necessity:** Communications required to fulfill our service agreements
 
@@ -51,15 +51,13 @@ Your SMS information is used to:
 - Send requested service updates and notifications
 - Provide customer support and respond to inquiries
 - Deliver appointment reminders and scheduling information
-- Send promotional offers and marketing content (with consent)
 - Comply with legal and regulatory requirements
 - Improve our SMS service quality and effectiveness
 
 ## 6. Message Frequency and Types
 
-- **Frequency:** Up to 10 text messages per month
-- **Promotional Messages:** Maximum 4 marketing messages per month
-- **Service Messages:** Unlimited for essential service communications
+- **Frequency:** Message frequency varies based on service activity
+- **Service Messages:** Sent as needed for essential service communications
 - **Timing:** Messages sent between 8 AM and 9 PM EST, Monday through Friday
 - **Emergency Communications:** Critical service notifications may be sent outside normal hours
 
@@ -69,10 +67,7 @@ Your SMS information is used to:
 
 To receive SMS messages, you must provide explicit consent by:
 
-- Checking the opt-in box on our website forms
-- Texting a keyword to our designated number
-- Providing verbal consent during phone conversations
-- Confirming consent through email verification
+- Submitting your mobile phone number through our website contact form at https://ggunifiedtech.com/contact and providing explicit consent via an unchecked opt-in checkbox
 
 ### Consent Requirements
 
@@ -171,7 +166,7 @@ Our SMS service is not intended for individuals under 18 years of age. We do not
 
 Our SMS program complies with TCPA requirements including:
 
-- Express written consent for marketing messages
+- Express written consent for service-related messages
 - Clear opt-out mechanisms (STOP keyword)
 - Immediate honor of opt-out requests
 - Proper sender identification

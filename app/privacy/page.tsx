@@ -253,6 +253,11 @@ export default function PrivacyPolicyPage() {
           <p>
             We do not sell or rent your mobile number for third-party marketing.
           </p>
+          <p>
+            Mobile phone numbers collected for SMS communications are used
+            solely for service-related messaging and are not shared with third
+            parties for marketing or promotional purposes.
+          </p>
           <ul className="list-disc space-y-1 pl-6">
             <li>Service providers who enable SMS delivery and compliance</li>
             <li>Legal disclosures when required by law or regulation</li>

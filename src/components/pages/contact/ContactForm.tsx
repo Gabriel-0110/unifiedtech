@@ -45,6 +45,15 @@ export function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (formData.smsOptIn && !formData.phone.trim()) {
+      setStatus({
+        type: "error",
+        message: "Please provide a phone number to opt in to SMS messages.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setStatus(null);
     try {
@@ -209,16 +218,12 @@ export function ContactForm() {
                   htmlFor="smsOptIn"
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  I agree to receive SMS messages as described above.
-                </label>
-                <p className="mt-2 text-xs text-gray-600 dark:text-gray-400">
-                  By submitting this form, you consent to receive SMS messages
-                  from UnifiedTech Solutions by G&G at the phone number you
-                  provide. Messages may include service reminders and
+                  I agree to receive SMS messages from UnifiedTech Solutions by
+                  G&G at the phone number I provide for service reminders and
                   account-related notifications. Message frequency varies. Msg &
-                  data rates may apply. Reply STOP to opt out or HELP for help.
-                  Consent is not a condition of purchase.
-                </p>
+                  data rates may apply. Consent is not a condition of purchase.
+                  Reply STOP to opt out or HELP for help.
+                </label>
               </div>
             </div>
           </div>
