@@ -2,6 +2,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+function isValidUs10OrE164Phone(input: string): boolean {
+  const trimmed = input.trim();
+  if (!trimmed) return false;
+  if (/^\+[1-9]\d{9,14}$/.test(trimmed)) return true;
+
+  const digitsOnly = trimmed.replace(/\D/g, "");
+  if (digitsOnly.length === 10) return true;
+  if (digitsOnly.length === 11 && digitsOnly.startsWith("1")) return true;
+  return false;
+}
+
 interface FormState {
   firstName: string;
   lastName: string;
@@ -52,6 +63,17 @@ export function ContactForm() {
         message: "Please provide a phone number to opt in to SMS messages.",
       });
       return;
+    }
+
+    if (formData.smsOptIn && formData.phone.trim()) {
+      if (!isValidUs10OrE164Phone(formData.phone)) {
+        setStatus({
+          type: "error",
+          message:
+            "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636).",
+        });
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -140,13 +162,17 @@ export function ContactForm() {
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Phone Number
+              Phone Number{formData.smsOptIn ? " *" : ""}
             </label>
             <input
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               placeholder="+18556403636"
+              required={formData.smsOptIn}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
           </div>
@@ -218,28 +244,35 @@ export function ContactForm() {
                   htmlFor="smsOptIn"
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  By checking this box and submitting this form, you consent to
-                  receive service-related SMS messages from UnifiedTech
-                  Solutions by G&G at the number provided. Message types may
-                  include service reminders and account-related notifications.
-                  Msg frequency varies. Msg & data rates may apply. Consent is
-                  not a condition of purchase. Reply STOP to opt out. Reply HELP
-                  for help. Mobile opt-in information won't be shared with third
-                  parties for marketing purposes.
-                </label>
-
-                <p className="mt-2 text-xs text-blue-600 dark:text-blue-400">
+                  By checking this box and submitting this form at{" "}
                   <Link
-                    href="/privacy"
+                    href="https://ggunifiedtech.com/contact"
                     className="underline hover:no-underline"
                   >
-                    Privacy Policy
-                  </Link>{" "}
-                  and{" "}
-                  <Link href="/terms" className="underline hover:no-underline">
-                    Terms &amp; Conditions
+                    https://ggunifiedtech.com/contact
                   </Link>
-                </p>
+                  , you consent to receive service-related, 1-to-1 SMS from
+                  UnifiedTech Solutions by G&G at the number provided
+                  (appointment reminders, account notifications, and support
+                  follow-ups). Msg frequency varies. Msg & data rates may apply.
+                  Consent is not a condition of purchase.
+                  Reply STOP to opt out, HELP for help. Privacy Policy:{" "}
+                  <Link
+                    href="https://ggunifiedtech.com/privacy"
+                    className="underline hover:no-underline"
+                  >
+                    https://ggunifiedtech.com/privacy
+                  </Link>{" "}
+                  Terms:{" "}
+                  <Link
+                    href="https://ggunifiedtech.com/terms"
+                    className="underline hover:no-underline"
+                  >
+                    https://ggunifiedtech.com/terms
+                  </Link>
+                  . mobile opt-in information won't be shared with third parties
+                  for marketing purposes.
+                </label>
               </div>
             </div>
           </div>

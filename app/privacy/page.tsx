@@ -254,7 +254,7 @@ export default function PrivacyPolicyPage() {
             We do not sell or rent your mobile number for third-party marketing.
           </p>
           <p>
-            Mobile opt-in information won't be shared with third parties for
+            mobile opt-in information won't be shared with third parties for
             marketing purposes.
           </p>
           <p>

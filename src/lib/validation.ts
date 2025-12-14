@@ -3,6 +3,23 @@
  */
 import { z } from "zod";
 
+function isValidUs10OrE164Phone(input: string): boolean {
+  const trimmed = input.trim();
+  if (!trimmed) return false;
+
+  // E.164 (international): +[country][number], 10-15 digits total after +
+  if (/^\+[1-9]\d{9,14}$/.test(trimmed)) return true;
+
+  // US 10-digit (allow separators)
+  const digitsOnly = trimmed.replace(/\D/g, "");
+  if (digitsOnly.length === 10) return true;
+
+  // Also allow US country code without leading '+' (e.g., 18556403636)
+  if (digitsOnly.length === 11 && digitsOnly.startsWith("1")) return true;
+
+  return false;
+}
+
 export const contactSchema = z
   .object({
     firstName: z
@@ -23,8 +40,8 @@ export const contactSchema = z
       .string()
       .optional()
       .refine(
-        (val) => !val || /\+?[\d\s\-()]{10,20}$/.test(val),
-        "Invalid phone number format"
+        (val) => !val || isValidUs10OrE164Phone(val),
+        "Phone number must be US 10-digit or E.164 format"
       ),
     company: z
       .string()
@@ -70,6 +87,15 @@ export const contactSchema = z
         code: z.ZodIssueCode.custom,
         path: ["phone"],
         message: "Phone number is required when opting in to SMS messages",
+      });
+      return;
+    }
+
+    if (data.smsOptIn && data.phone && !isValidUs10OrE164Phone(data.phone)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["phone"],
+        message: "Phone number must be US 10-digit or E.164 format",
       });
     }
   });
