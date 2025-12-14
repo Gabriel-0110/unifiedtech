@@ -51,6 +51,13 @@ See `.env.example` for required & optional vars (Supabase, analytics, rate limit
 
 `DATABASE_URL` is used by Prisma; `NEXT_PUBLIC_SUPABASE_URL` & `NEXT_PUBLIC_SUPABASE_ANON_KEY` enable optional client features.
 
+If you see build output like `placeholder DATABASE_URL; using unavailable Prisma client`, it means your local `.env` contains placeholder values (often with brackets like `[project-ref]`).
+To fix it for local development:
+
+- Create/Update `.env.local` (recommended) using `.env.example` as a template.
+- Set `DATABASE_URL` and `DIRECT_URL` to real Supabase Postgres connection strings (no brackets).
+- Re-generate Prisma client after changing DB env vars.
+
 ### Analytics
 
 `analytics.ts` stub loads GA + Clarity only if IDs are present. Extend with custom event helpers as needed.

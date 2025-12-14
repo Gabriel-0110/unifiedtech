@@ -218,27 +218,30 @@ export function ContactForm() {
                   htmlFor="smsOptIn"
                   className="text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
-                  I agree to receive SMS messages from UnifiedTech Solutions by
-                  G&G at the phone number I provide for service reminders and
-                  account-related notifications. Message frequency varies. Msg &
-                  data rates may apply. Consent is not a condition of purchase.
-                  Reply STOP to opt out or HELP for help.
+                  By checking this box and submitting this form, you consent to
+                  receive service-related SMS messages from UnifiedTech
+                  Solutions by G&G at the number provided. Message types may
+                  include service reminders and account-related notifications.
+                  Msg frequency varies. Msg & data rates may apply. Consent is
+                  not a condition of purchase. Reply STOP to opt out. Reply HELP
+                  for help. Mobile opt-in information won't be shared with third
+                  parties for marketing purposes.
                 </label>
+
+                <p className="mt-2 text-xs text-blue-600 dark:text-blue-400">
+                  <Link
+                    href="/privacy"
+                    className="underline hover:no-underline"
+                  >
+                    Privacy Policy
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="/terms" className="underline hover:no-underline">
+                    Terms &amp; Conditions
+                  </Link>
+                </p>
               </div>
             </div>
-          </div>
-
-          {/* SMS Policy Links */}
-          <div className="text-center">
-            <p className="text-xs text-blue-600 dark:text-blue-400">
-              <Link href="/privacy" className="underline hover:no-underline">
-                View our SMS Privacy Policy
-              </Link>{" "}
-              and{" "}
-              <Link href="/terms" className="underline hover:no-underline">
-                SMS Terms of Service
-              </Link>
-            </p>
           </div>
         </div>
         <button

@@ -98,8 +98,9 @@ export default function TermsPage() {
             their mobile phone number through our website contact form at
             https://ggunifiedtech.com/contact and providing explicit consent via
             an opt-in checkbox. SMS messages may include appointment reminders
-            and account-related notifications. Message frequency varies. Msg
-            &amp; data rates may apply. Reply STOP to opt out or HELP for help.
+            and account-related notifications. Msg frequency varies. Msg &amp;
+            data rates may apply. Reply STOP to opt out. Reply HELP for help or
+            contact info@ggunifiedtech.com or +1 (855) 640-3636.
           </p>
           <ul className="list-disc space-y-1 pl-6">
             <li>

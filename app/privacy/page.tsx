@@ -254,6 +254,10 @@ export default function PrivacyPolicyPage() {
             We do not sell or rent your mobile number for third-party marketing.
           </p>
           <p>
+            Mobile opt-in information won't be shared with third parties for
+            marketing purposes.
+          </p>
+          <p>
             Mobile phone numbers collected for SMS communications are used
             solely for service-related messaging and are not shared with third
             parties for marketing or promotional purposes.
