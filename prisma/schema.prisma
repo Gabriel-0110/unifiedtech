@@ -2,7 +2,10 @@
 // Keep models from legacy project (can prune later).
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // Support both Windows and WSL/Linux when sharing the same repo/node_modules.
+  // Without this, generating on Windows can break Prisma in WSL (debian-openssl-3.0.x), and vice-versa.
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
 }
 
 datasource db {

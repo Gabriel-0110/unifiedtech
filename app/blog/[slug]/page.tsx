@@ -10,7 +10,13 @@ export const revalidate = 300
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = await prisma.blogPost.findUnique({ where: { slug } })
+  let post: any = null
+  try {
+    post = await prisma.blogPost.findUnique({ where: { slug } })
+  } catch (error) {
+    console.warn('Database not available for blog post:', error)
+    post = null
+  }
   if (!post || post.status !== 'PUBLISHED') return notFound()
   const html = basicMarkdownToHtml(post.content)
   return (
