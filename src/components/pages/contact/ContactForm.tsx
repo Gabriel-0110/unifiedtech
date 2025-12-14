@@ -30,6 +30,7 @@ export function ContactForm() {
     type: "success" | "error";
     message: string;
   }>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormState>({
     firstName: "",
     lastName: "",
@@ -48,6 +49,44 @@ export function ContactForm() {
   ) {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
+
+    // Client-side enforcement: when SMS opt-in is checked, phone must be present and valid.
+    if (name === "smsOptIn" && type === "checkbox") {
+      const nextSmsOptIn = checked;
+      const nextPhone = formData.phone;
+
+      if (nextSmsOptIn) {
+        if (!nextPhone.trim()) {
+          setPhoneError(
+            "Phone number is required when opting in to SMS messages."
+          );
+        } else if (!isValidUs10OrE164Phone(nextPhone)) {
+          setPhoneError(
+            "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636)."
+          );
+        } else {
+          setPhoneError(null);
+        }
+      } else {
+        setPhoneError(null);
+      }
+    }
+
+    if (name === "phone" && formData.smsOptIn) {
+      const nextPhone = value;
+      if (!nextPhone.trim()) {
+        setPhoneError(
+          "Phone number is required when opting in to SMS messages."
+        );
+      } else if (!isValidUs10OrE164Phone(nextPhone)) {
+        setPhoneError(
+          "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636)."
+        );
+      } else {
+        setPhoneError(null);
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -58,6 +97,7 @@ export function ContactForm() {
     e.preventDefault();
 
     if (formData.smsOptIn && !formData.phone.trim()) {
+      setPhoneError("Phone number is required when opting in to SMS messages.");
       setStatus({
         type: "error",
         message: "Please provide a phone number to opt in to SMS messages.",
@@ -67,6 +107,9 @@ export function ContactForm() {
 
     if (formData.smsOptIn && formData.phone.trim()) {
       if (!isValidUs10OrE164Phone(formData.phone)) {
+        setPhoneError(
+          "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636)."
+        );
         setStatus({
           type: "error",
           message:
@@ -75,6 +118,8 @@ export function ContactForm() {
         return;
       }
     }
+
+    setPhoneError(null);
 
     setIsSubmitting(true);
     setStatus(null);
@@ -173,8 +218,14 @@ export function ContactForm() {
               onChange={handleChange}
               placeholder="+18556403636"
               required={formData.smsOptIn}
+              aria-invalid={!!phoneError}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
+            {phoneError ? (
+              <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                {phoneError}
+              </p>
+            ) : null}
           </div>
         </div>
         <div>
@@ -255,8 +306,8 @@ export function ContactForm() {
                   UnifiedTech Solutions by G&G at the number provided
                   (appointment reminders, account notifications, and support
                   follow-ups). Msg frequency varies. Msg & data rates may apply.
-                  Consent is not a condition of purchase.
-                  Reply STOP to opt out, HELP for help. Privacy Policy:{" "}
+                  Consent is not a condition of purchase. Reply STOP to opt out,
+                  HELP for help. Privacy Policy:{" "}
                   <Link
                     href="https://ggunifiedtech.com/privacy"
                     className="underline hover:no-underline"

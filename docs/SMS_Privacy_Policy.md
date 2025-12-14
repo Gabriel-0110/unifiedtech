@@ -129,6 +129,8 @@ For assistance with our SMS program:
 
 We do not sell, rent, or share your mobile phone number with third parties for their marketing purposes. We may share your SMS data with:
 
+Mobile opt-in information won't be shared with third parties for marketing purposes.
+
 **Service Providers:** Third-party SMS platform providers who help us deliver messages
 **Legal Requirements:** When required by law, regulation, or legal process
 **Business Transfers:** In connection with a merger, acquisition, or sale of business assets
