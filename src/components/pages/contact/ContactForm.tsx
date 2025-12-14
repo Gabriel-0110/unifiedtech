@@ -96,11 +96,12 @@ export function ContactForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (formData.smsOptIn && !formData.phone.trim()) {
-      setPhoneError("Phone number is required when opting in to SMS messages.");
+    // Phone number is required for all submissions
+    if (!formData.phone.trim()) {
+      setPhoneError("Phone number is required.");
       setStatus({
         type: "error",
-        message: "Please provide a phone number to opt in to SMS messages.",
+        message: "Please provide a phone number.",
       });
       return;
     }
@@ -207,7 +208,7 @@ export function ContactForm() {
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Phone Number{formData.smsOptIn ? " *" : ""}
+              Phone Number *
             </label>
             <input
               type="tel"
@@ -217,7 +218,7 @@ export function ContactForm() {
               value={formData.phone}
               onChange={handleChange}
               placeholder="+18556403636"
-              required={formData.smsOptIn}
+              required
               aria-invalid={!!phoneError}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />

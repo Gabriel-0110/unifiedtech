@@ -26,6 +26,8 @@ Our SMS program is intended for service-related, 1-to-1 conversational messaging
 
 **Note:** This program does not include marketing or promotional content. Mobile phone numbers collected for SMS communications are used solely for service-related messaging and are not shared with third parties for marketing or promotional purposes.
 
+**mobile opt-in information won't be shared with third parties for marketing purposes.**
+
 ## 3. Information We Collect
 
 When you opt-in to our SMS program, we collect:
