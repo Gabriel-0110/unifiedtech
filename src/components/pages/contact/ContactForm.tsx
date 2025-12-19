@@ -31,6 +31,7 @@ export function ContactForm() {
     message: string;
   }>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
+
   const [formData, setFormData] = useState<FormState>({
     firstName: "",
     lastName: "",
@@ -67,22 +68,17 @@ export function ContactForm() {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    if (name === "smsOptIn" && type === "checkbox") {
-      const nextSmsOptIn = checked;
-      const nextPhone = formData.phone;
-
-      setPhoneError(getPhoneError(nextPhone, nextSmsOptIn));
-    }
-
-    if (name === "phone") {
-      const nextPhone = value;
-      setPhoneError(getPhoneError(nextPhone, formData.smsOptIn));
-    }
-
-    setFormData((prev) => ({
-      ...prev,
+    const next: FormState = {
+      ...formData,
       [name]: type === "checkbox" ? checked : value,
-    }));
+    } as FormState;
+
+    // Recompute phone error using the *next* state (avoids stale-state edge cases)
+    if (name === "phone" || name === "smsOptIn") {
+      setPhoneError(getPhoneError(next.phone, next.smsOptIn));
+    }
+
+    setFormData(next);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -91,24 +87,40 @@ export function ContactForm() {
     const nextPhoneError = getPhoneError(formData.phone, formData.smsOptIn);
     if (nextPhoneError) {
       setPhoneError(nextPhoneError);
-      setStatus({
-        type: "error",
-        message: nextPhoneError,
-      });
+      setStatus({ type: "error", message: nextPhoneError });
       return;
     }
 
     setPhoneError(null);
-
     setIsSubmitting(true);
     setStatus(null);
+
     try {
+      // Build payload and OMIT phone if blank (prevents backend treating "" as "provided")
+      const payload: any = {
+        ...formData,
+        budget: null,
+        newsletter: false,
+      };
+
+      const phoneTrimmed = (payload.phone ?? "").toString().trim();
+      if (!phoneTrimmed) {
+        delete payload.phone;
+      } else {
+        payload.phone = phoneTrimmed;
+      }
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, budget: null, newsletter: false }),
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Submission failed");
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(text || "Submission failed");
+      }
+
       setStatus({ type: "success", message: "Message sent successfully!" });
       setFormData({
         firstName: "",
@@ -123,7 +135,7 @@ export function ContactForm() {
     } catch (err: any) {
       setStatus({
         type: "error",
-        message: err.message || "Something went wrong",
+        message: err?.message || "Something went wrong",
       });
     } finally {
       setIsSubmitting(false);
@@ -134,12 +146,14 @@ export function ContactForm() {
     <div className="bg-white p-8 dark:bg-gray-900 lg:p-12">
       <div className="mb-8">
         <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100">
-          Let's Start Your Project
+          Let&apos;s Start Your Project
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          Fill out the form below and we'll get back to you within 24 hours.
+          Fill out the form below and we&apos;ll get back to you within 24
+          hours.
         </p>
       </div>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
@@ -155,6 +169,7 @@ export function ContactForm() {
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
           </div>
+
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Last Name *
@@ -169,6 +184,7 @@ export function ContactForm() {
             />
           </div>
         </div>
+
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -184,10 +200,12 @@ export function ContactForm() {
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
           </div>
+
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Phone Number
+              Phone Number{formData.smsOptIn ? " *" : ""}
             </label>
+
             <input
               type="tel"
               inputMode="tel"
@@ -197,9 +215,11 @@ export function ContactForm() {
               onChange={handleChange}
               placeholder="+18556403636"
               required={formData.smsOptIn}
+              aria-required={formData.smsOptIn}
               aria-invalid={!!phoneError}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
+
             {phoneError ? (
               <p className="mt-2 text-sm text-red-600 dark:text-red-400">
                 {phoneError}
@@ -207,6 +227,7 @@ export function ContactForm() {
             ) : null}
           </div>
         </div>
+
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Company
@@ -219,6 +240,7 @@ export function ContactForm() {
             className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
           />
         </div>
+
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Project Type *
@@ -243,6 +265,7 @@ export function ContactForm() {
             <option value="Other">Other</option>
           </select>
         </div>
+
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             Project Details *
@@ -257,8 +280,8 @@ export function ContactForm() {
             className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
           />
         </div>
+
         <div className="space-y-4">
-          {/* SMS Service Opt-in - Compliant with Microsoft Teams UCAAS Low Volume */}
           <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
             <div className="flex items-start space-x-3">
               <input
@@ -284,9 +307,9 @@ export function ContactForm() {
                   , you consent to receive service-related, 1-to-1 SMS from
                   UnifiedTech Solutions by G&G at the number provided
                   (appointment reminders, account notifications, and support
-                  follow-ups). Msg frequency varies. Msg & data rates may apply.
-                  Consent is not a condition of purchase. Reply STOP to opt out,
-                  HELP for help. Privacy Policy:{" "}
+                  follow-ups). Msg frequency varies. Msg &amp; data rates may
+                  apply. Consent is not a condition of purchase. Reply STOP to
+                  opt out, HELP for help. Privacy Policy:{" "}
                   <Link
                     href="https://ggunifiedtech.com/privacy"
                     className="underline hover:no-underline"
@@ -300,9 +323,10 @@ export function ContactForm() {
                   >
                     https://ggunifiedtech.com/terms
                   </Link>
-                  . mobile opt-in information won't be shared with third parties
-                  for marketing purposes.
+                  . mobile opt-in information won&apos;t be shared with third
+                  parties for marketing purposes.
                 </label>
+
                 <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                   If you opt in to SMS, a mobile number is required. Otherwise,
                   you can submit this form without a phone number.
@@ -311,6 +335,7 @@ export function ContactForm() {
             </div>
           </div>
         </div>
+
         <button
           type="submit"
           disabled={isSubmitting}
@@ -318,6 +343,7 @@ export function ContactForm() {
         >
           {isSubmitting ? "Sending Message..." : "Send Message"}
         </button>
+
         {status && (
           <p
             className={`text-sm ${
@@ -333,4 +359,5 @@ export function ContactForm() {
     </div>
   );
 }
+
 export default ContactForm;

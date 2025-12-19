@@ -12,6 +12,21 @@ import {
 } from "@/lib/middleware";
 import { emailService } from "@/lib/email";
 
+function isValidUs10OrE164Phone(input: string): boolean {
+  const trimmed = input.trim();
+  if (!trimmed) return false;
+
+  // E.164 like +18556403636
+  if (/^\+[1-9]\d{9,14}$/.test(trimmed)) return true;
+
+  // US 10-digit (or 11 with leading 1) in any formatting
+  const digitsOnly = trimmed.replace(/\D/g, "");
+  if (digitsOnly.length === 10) return true;
+  if (digitsOnly.length === 11 && digitsOnly.startsWith("1")) return true;
+
+  return false;
+}
+
 function calculateLeadScore(data: any) {
   let score = 10;
   if (data.company) score += 15;
@@ -74,14 +89,34 @@ const contactHandler = withErrorBoundary(async (req: any) => {
   const ip = req.ip;
 
   const smsOptIn = !!validatedData.smsOptIn;
+  const rawPhone =
+    typeof validatedData.phone === "string" ? validatedData.phone.trim() : "";
+
+  // ✅ Phone is required ONLY if SMS opt-in is checked
+  if (smsOptIn && !rawPhone) {
+    return NextResponse.json(
+      { success: false, message: "Phone number is required for SMS opt-in." },
+      { status: 400 }
+    );
+  }
+
+  // ✅ If phone is provided (whether opted in or not), validate basic format
+  if (rawPhone && !isValidUs10OrE164Phone(rawPhone)) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636).",
+      },
+      { status: 400 }
+    );
+  }
 
   const contactData = {
     firstName: sanitizeInput.string(validatedData.firstName),
     lastName: sanitizeInput.string(validatedData.lastName),
     email: sanitizeInput.email(validatedData.email),
-    phone: validatedData.phone
-      ? sanitizeInput.string(validatedData.phone)
-      : null,
+    phone: rawPhone ? sanitizeInput.string(rawPhone) : null,
     company: validatedData.company
       ? sanitizeInput.string(validatedData.company)
       : null,
@@ -116,12 +151,14 @@ const contactHandler = withErrorBoundary(async (req: any) => {
   try {
     await emailService.sendContactNotification(contactData);
   } catch {}
-  if (contactData.newsletter)
+
+  if (contactData.newsletter) {
     await handleNewsletterSubscription(
       contactData.email,
       contactData.firstName,
       contactData.lastName
     );
+  }
 
   return NextResponse.json(
     {
@@ -144,4 +181,5 @@ export const POST = composeRoute(
   withValidation(contactSchema),
   contactHandler
 );
+
 export const GET = composeRoute(withSecurity(), healthHandler);

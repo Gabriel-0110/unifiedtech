@@ -36,13 +36,16 @@ export const contactSchema = z
       .string()
       .email("Please enter a valid email address")
       .max(255, "Email is too long"),
-    phone: z
-      .string()
-      .optional()
-      .refine(
-        (val) => !val || isValidUs10OrE164Phone(val),
-        "Phone number must be US 10-digit or E.164 format"
-      ),
+    phone: z.preprocess(
+      (val) => (typeof val === "string" && val.trim() === "" ? undefined : val),
+      z
+        .string()
+        .refine(
+          isValidUs10OrE164Phone,
+          "Phone number must be US 10-digit or E.164 format"
+        )
+        .optional()
+    ),
     company: z
       .string()
       .optional()
