@@ -73,7 +73,6 @@ export function ContactForm() {
       [name]: type === "checkbox" ? checked : value,
     } as FormState;
 
-    // Recompute phone error using the *next* state (avoids stale-state edge cases)
     if (name === "phone" || name === "smsOptIn") {
       setPhoneError(getPhoneError(next.phone, next.smsOptIn));
     }
@@ -96,13 +95,13 @@ export function ContactForm() {
     setStatus(null);
 
     try {
-      // Build payload and OMIT phone if blank (prevents backend treating "" as "provided")
+      // Build payload WITHOUT budget (you don't have a budget field)
       const payload: any = {
         ...formData,
-        budget: null,
         newsletter: false,
       };
 
+      // Omit phone entirely if blank (prevents schema treating "" as "provided")
       const phoneTrimmed = (payload.phone ?? "").toString().trim();
       if (!phoneTrimmed) {
         delete payload.phone;
@@ -205,7 +204,6 @@ export function ContactForm() {
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Phone Number{formData.smsOptIn ? " *" : ""}
             </label>
-
             <input
               type="tel"
               inputMode="tel"
@@ -219,7 +217,6 @@ export function ContactForm() {
               aria-invalid={!!phoneError}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
-
             {phoneError ? (
               <p className="mt-2 text-sm text-red-600 dark:text-red-400">
                 {phoneError}
@@ -326,7 +323,6 @@ export function ContactForm() {
                   . mobile opt-in information won&apos;t be shared with third
                   parties for marketing purposes.
                 </label>
-
                 <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                   If you opt in to SMS, a mobile number is required. Otherwise,
                   you can submit this form without a phone number.
