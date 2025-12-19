@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prisma, databaseUrlStatus } from "@/lib/db";
 import { contactSchema } from "@/lib/validation";
 import {
   composeRoute,
@@ -84,6 +84,19 @@ async function handleNewsletterSubscription(
 }
 
 const contactHandler = withErrorBoundary(async (req: any) => {
+  if (!databaseUrlStatus.ok) {
+    return NextResponse.json(
+      {
+        error: "Database not available",
+        code: "DB_UNAVAILABLE",
+        ...(process.env.NODE_ENV === "development"
+          ? { reason: databaseUrlStatus.reason }
+          : {}),
+      },
+      { status: 503 }
+    );
+  }
+
   const { validatedData } = req;
   const userAgent = req.headers.get("user-agent");
   const ip = req.ip;

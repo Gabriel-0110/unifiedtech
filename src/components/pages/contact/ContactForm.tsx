@@ -116,8 +116,28 @@ export function ContactForm() {
       });
 
       if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || "Submission failed");
+        const contentType = res.headers.get("content-type") || "";
+        let message = "Submission failed";
+
+        try {
+          if (contentType.includes("application/json")) {
+            const data: any = await res.json();
+            const base =
+              data?.error ||
+              data?.message ||
+              (data ? JSON.stringify(data) : "");
+            message = base || message;
+            if (data?.code) message = `${message} (${data.code})`;
+            if (data?.reason) message = `${message}: ${data.reason}`;
+          } else {
+            const text = await res.text();
+            if (text) message = text;
+          }
+        } catch {
+          // Fall back to a generic message
+        }
+
+        throw new Error(message);
       }
 
       setStatus({ type: "success", message: "Message sent successfully!" });
