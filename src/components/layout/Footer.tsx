@@ -69,6 +69,22 @@ export const Footer = () => {
                   <span className="text-sm">Albany, NY</span>
                 </div>
               </div>
+
+              <div className="mt-8">
+                <p className="mb-3 text-sm font-semibold text-white">
+                  Security Rating
+                </p>
+                <div className="w-full max-w-[256px] overflow-hidden rounded-md bg-white/5 p-2">
+                  <iframe
+                    title="SecurityScorecard security rating badge for ggunifiedtech.com"
+                    src="https://scores.securityscorecard.io/security-rating/badge/ggunifiedtech.com"
+                    width={256}
+                    height={100}
+                    loading="lazy"
+                    style={{ border: 0 }}
+                  />
+                </div>
+              </div>
             </div>
             {Object.entries(footerSections).map(([key, section]) => (
               <div key={key}>

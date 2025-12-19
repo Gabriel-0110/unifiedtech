@@ -42,6 +42,23 @@ export function ContactForm() {
     smsOptIn: false,
   });
 
+  function getPhoneError(
+    nextPhone: string,
+    nextSmsOptIn: boolean
+  ): string | null {
+    const trimmed = nextPhone.trim();
+
+    if (nextSmsOptIn && !trimmed) {
+      return "Phone number is required for SMS opt-in.";
+    }
+
+    if (trimmed && !isValidUs10OrE164Phone(trimmed)) {
+      return "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636).";
+    }
+
+    return null;
+  }
+
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -50,41 +67,16 @@ export function ContactForm() {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
-    // Client-side enforcement: when SMS opt-in is checked, phone must be present and valid.
     if (name === "smsOptIn" && type === "checkbox") {
       const nextSmsOptIn = checked;
       const nextPhone = formData.phone;
 
-      if (nextSmsOptIn) {
-        if (!nextPhone.trim()) {
-          setPhoneError(
-            "Phone number is required when opting in to SMS messages."
-          );
-        } else if (!isValidUs10OrE164Phone(nextPhone)) {
-          setPhoneError(
-            "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636)."
-          );
-        } else {
-          setPhoneError(null);
-        }
-      } else {
-        setPhoneError(null);
-      }
+      setPhoneError(getPhoneError(nextPhone, nextSmsOptIn));
     }
 
-    if (name === "phone" && formData.smsOptIn) {
+    if (name === "phone") {
       const nextPhone = value;
-      if (!nextPhone.trim()) {
-        setPhoneError(
-          "Phone number is required when opting in to SMS messages."
-        );
-      } else if (!isValidUs10OrE164Phone(nextPhone)) {
-        setPhoneError(
-          "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636)."
-        );
-      } else {
-        setPhoneError(null);
-      }
+      setPhoneError(getPhoneError(nextPhone, formData.smsOptIn));
     }
 
     setFormData((prev) => ({
@@ -96,28 +88,14 @@ export function ContactForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Phone number is required for all submissions
-    if (!formData.phone.trim()) {
-      setPhoneError("Phone number is required.");
+    const nextPhoneError = getPhoneError(formData.phone, formData.smsOptIn);
+    if (nextPhoneError) {
+      setPhoneError(nextPhoneError);
       setStatus({
         type: "error",
-        message: "Please provide a phone number.",
+        message: nextPhoneError,
       });
       return;
-    }
-
-    if (formData.smsOptIn && formData.phone.trim()) {
-      if (!isValidUs10OrE164Phone(formData.phone)) {
-        setPhoneError(
-          "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636)."
-        );
-        setStatus({
-          type: "error",
-          message:
-            "Please enter a valid phone number (US 10-digit or E.164 format, e.g. +18556403636).",
-        });
-        return;
-      }
     }
 
     setPhoneError(null);
@@ -208,7 +186,7 @@ export function ContactForm() {
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Phone Number *
+              Phone Number
             </label>
             <input
               type="tel"
@@ -218,7 +196,7 @@ export function ContactForm() {
               value={formData.phone}
               onChange={handleChange}
               placeholder="+18556403636"
-              required
+              required={formData.smsOptIn}
               aria-invalid={!!phoneError}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
@@ -325,6 +303,10 @@ export function ContactForm() {
                   . mobile opt-in information won't be shared with third parties
                   for marketing purposes.
                 </label>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                  If you opt in to SMS, a mobile number is required. Otherwise,
+                  you can submit this form without a phone number.
+                </p>
               </div>
             </div>
           </div>
