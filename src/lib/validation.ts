@@ -46,6 +46,7 @@ export const contactSchema = z
         )
         .optional()
     ),
+
     company: z
       .string()
       .optional()
