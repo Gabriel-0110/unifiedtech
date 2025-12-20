@@ -45,7 +45,10 @@ prisma/
 
 ### Environment Variables
 
-See `.env.example` for required & optional vars (Supabase, analytics, rate limiting, Dynamics Graph, email).
+See `.env.example` for required & optional vars (MongoDB for `/api/contact`, Supabase/Prisma, analytics, rate limiting, Dynamics Graph, email).
+
+For local dev, copy `.env.example` to `.env.local` and put _real secrets_ only in `.env.local`.
+For production, set secrets in your hosting provider (e.g., Vercel Project → Settings → Environment Variables).
 
 ### Supabase
 

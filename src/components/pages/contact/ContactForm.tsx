@@ -122,11 +122,27 @@ export function ContactForm() {
         try {
           if (contentType.includes("application/json")) {
             const data: any = await res.json();
-            const base =
-              data?.error ||
-              data?.message ||
-              (data ? JSON.stringify(data) : "");
-            message = base || message;
+            // Prefer server-provided, user-friendly message.
+            // Our API validation middleware returns `{ error, code, details }`.
+            // `details` is often a Zod issues array.
+            if (Array.isArray(data?.details) && data.details.length > 0) {
+              const firstIssue = data.details[0];
+              const issueMsg = firstIssue?.message;
+              const issuePath = Array.isArray(firstIssue?.path)
+                ? firstIssue.path.join(".")
+                : "";
+              message = issueMsg
+                ? issuePath
+                  ? `${issueMsg} (${issuePath})`
+                  : issueMsg
+                : message;
+            } else {
+              const base =
+                data?.message ||
+                data?.error ||
+                (data ? JSON.stringify(data) : "");
+              message = base || message;
+            }
             if (data?.code) message = `${message} (${data.code})`;
             if (data?.reason) message = `${message}: ${data.reason}`;
           } else {

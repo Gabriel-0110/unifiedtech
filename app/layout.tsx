@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { LiveChatWidget } from '@/components/chat/LiveChatWidget'
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { LiveChatWidget } from "@/components/chat/LiveChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,10 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: process.env.SITE_NAME || 'UnifiedTech Solutions by G&G',
-  description: process.env.SITE_DESCRIPTION || 'Professional technology solutions for modern businesses. A division of ALVES & ARAUJO TOURISM SERVICES, LLC',
-}
-
+  title: process.env.SITE_NAME || "UnifiedTech Solutions by G&G",
+  description:
+    process.env.SITE_DESCRIPTION ||
+    "Professional technology solutions for modern businesses. A division of ALVES & ARAUJO TOURISM SERVICES, LLC",
+};
 
 export default function RootLayout({
   children,
@@ -27,13 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className='dark'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}> 
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body
+        suppressHydrationWarning
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+      >
         <Header />
         {children}
         <Footer />
         <LiveChatWidget />
       </body>
     </html>
-  )
+  );
 }

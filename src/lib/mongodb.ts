@@ -1,13 +1,5 @@
 import { MongoClient, type MongoClientOptions, type Db } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
-
-if (!uri) {
-  throw new Error(
-    "Missing MONGODB_URI. Add it to .env.local (recommended) or your hosting provider env vars."
-  );
-}
-
 const options: MongoClientOptions = {};
 
 declare global {
@@ -17,15 +9,29 @@ declare global {
 
 let clientPromise: Promise<MongoClient>;
 
+function getMongoUriOrThrow(): string {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error(
+      "Missing MONGODB_URI. Add it to .env.local (recommended) or your hosting provider env vars."
+    );
+  }
+  return uri;
+}
+
 if (process.env.NODE_ENV === "development") {
   if (!global._mongoClientPromise) {
-    const client = new MongoClient(uri, options);
+    const client = new MongoClient(getMongoUriOrThrow(), options);
     global._mongoClientPromise = client.connect();
   }
   clientPromise = global._mongoClientPromise;
 } else {
-  const client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  // In production we still create a single promise per module instance,
+  // but the missing-env error is thrown lazily when the API route calls getMongoClient().
+  clientPromise = Promise.resolve().then(() => {
+    const client = new MongoClient(getMongoUriOrThrow(), options);
+    return client.connect();
+  });
 }
 
 export async function getMongoClient(): Promise<MongoClient> {
