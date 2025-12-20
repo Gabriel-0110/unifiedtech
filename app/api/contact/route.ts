@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { prisma, databaseUrlStatus } from "@/lib/db";
 import { contactSchema } from "@/lib/validation";
 import {
   composeRoute,
@@ -11,6 +10,9 @@ import {
   sanitizeInput,
 } from "@/lib/middleware";
 import { emailService } from "@/lib/email";
+import { getMongoDb } from "@/lib/mongodb";
+
+export const runtime = "nodejs";
 
 function isValidUs10OrE164Phone(input: string): boolean {
   const trimmed = input.trim();
@@ -58,39 +60,19 @@ function calculateLeadScore(data: any) {
   return Math.min(score, 100);
 }
 
-async function handleNewsletterSubscription(
-  email: string,
-  firstName: string,
-  lastName: string
-) {
-  try {
-    const existing = await prisma.newsletter.findUnique({ where: { email } });
-    if (!existing) {
-      await prisma.newsletter.create({
-        data: {
-          email,
-          firstName,
-          lastName,
-          status: "CONFIRMED",
-          source: "contact_form",
-          confirmedAt: new Date(),
-        },
-      });
-    }
-  } catch (e) {
-    if (process.env.NODE_ENV === "development")
-      console.warn("Newsletter create failed", e);
-  }
-}
-
 const contactHandler = withErrorBoundary(async (req: any) => {
-  if (!databaseUrlStatus.ok) {
+  let db;
+  try {
+    db = await getMongoDb();
+    // Ensure the connection is actually usable
+    await db.command({ ping: 1 });
+  } catch (e: any) {
     return NextResponse.json(
       {
         error: "Database not available",
         code: "DB_UNAVAILABLE",
         ...(process.env.NODE_ENV === "development"
-          ? { reason: databaseUrlStatus.reason }
+          ? { reason: e?.message || String(e) }
           : {}),
       },
       { status: 503 }
@@ -144,40 +126,36 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     userAgent: userAgent?.substring(0, 255) || null,
   };
 
-  const contact = await prisma.contact.create({ data: contactData });
-
   const leadNotes = smsOptIn
     ? `SMS consent: yes (service-only). Opt-in method: website contact form checkbox. Phone: ${
         contactData.phone || "N/A"
       }. STOP/HELP supported. Msg & data rates may apply. Consent is not a condition of purchase.`
     : "SMS consent: no.";
 
-  await prisma.lead.create({
-    data: {
-      contactId: contact.id,
-      score: calculateLeadScore(contactData),
-      stage: "NEW",
-      notes: leadNotes,
-    },
+  const leadScore = calculateLeadScore(contactData);
+
+  const collectionName =
+    process.env.MONGODB_CONTACT_COLLECTION || "contact_submissions";
+  const collection = db.collection(collectionName);
+
+  const insertResult = await collection.insertOne({
+    ...contactData,
+    smsOptIn,
+    leadScore,
+    leadNotes,
+    createdAt: new Date(),
+    status: "NEW",
   });
 
   try {
     await emailService.sendContactNotification(contactData);
   } catch {}
 
-  if (contactData.newsletter) {
-    await handleNewsletterSubscription(
-      contactData.email,
-      contactData.firstName,
-      contactData.lastName
-    );
-  }
-
   return NextResponse.json(
     {
       success: true,
       message: "Thank you for your message.",
-      contactId: contact.id,
+      contactId: insertResult.insertedId.toString(),
     },
     { status: 201 }
   );
