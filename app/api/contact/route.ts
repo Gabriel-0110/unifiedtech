@@ -61,10 +61,12 @@ function looksLikeInvalidPropertyError(
   // - "Invalid property 'foo' was found in entity ..."
   // - "The property 'foo' does not exist on type ..."
   // - "could not find a property named 'foo' on type ..."
+  // - "An undeclared property 'foo' which only has property annotations ..."
   return (
     (hay.includes("invalid property") ||
       hay.includes("does not exist on type") ||
-      hay.includes("could not find a property")) &&
+      hay.includes("could not find a property") ||
+      hay.includes("undeclared property")) &&
     hay.includes(needle)
   );
 }
@@ -72,14 +74,14 @@ function looksLikeInvalidPropertyError(
 function getWebSubmissionLeadLookupNavPropertyCandidates(): string[] {
   // Allow overriding the navigation property/lookup logical name.
   // Example values you might set:
-  // - ux_websubmission_lead
   // - ux_websubmission_Lead
   const raw = (process.env.DATAVERSE_WEB_SUBMISSION_LEAD_LOOKUP || "").trim();
   if (raw) return [raw];
 
-  // Reasonable defaults based on your schema name in Power Apps.
-  // Dataverse Web API generally expects lowercase logical names.
-  return ["ux_websubmission_lead", "ux_websubmission_Lead"];
+  // Based on actual Dataverse metadata query:
+  // NavigationProperty: ux_websubmission_Lead (capital L)
+  // Try the correct one first, then fallback to lowercase variant.
+  return ["ux_websubmission_Lead", "ux_websubmission_lead"];
 }
 
 function isValidUs10OrE164Phone(input: string): boolean {
