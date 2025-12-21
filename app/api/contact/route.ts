@@ -149,6 +149,11 @@ const contactHandler = withErrorBoundary(async (req: any) => {
 
   const { validatedData } = req;
   const debugDataverse = req.headers.get("x-debug-dataverse") === "1";
+  const debugToken = req.headers.get("x-debug-token") || "";
+  const canExposeDebug =
+    process.env.NODE_ENV === "development" ||
+    (!!process.env.DEBUG_API_TOKEN &&
+      debugToken === process.env.DEBUG_API_TOKEN);
   const userAgent = req.headers.get("user-agent");
   const ip = req.ip;
 
@@ -358,6 +363,16 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     const message = err instanceof Error ? err.message : String(err);
     dataverseErrorMessage = message;
 
+    // Always log Dataverse failures in production so we can diagnose quickly.
+    // Avoid logging secrets (tokens are never logged by the Dataverse client).
+    // eslint-disable-next-line no-console
+    console.error("[contact] Dataverse integration failed", {
+      requestId: req.requestId,
+      mongoId,
+      webSubmissionId: dataverseResult.webSubmissionId,
+      message,
+    });
+
     // If we created a web submission, mark it as Error.
     if (dataverseResult.webSubmissionId) {
       try {
@@ -371,14 +386,6 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     } else {
       dataverseResult.status = "error";
     }
-
-    if (process.env.NODE_ENV === "development") {
-      // eslint-disable-next-line no-console
-      console.warn("[contact] Dataverse integration failed", {
-        message,
-        webSubmissionId: dataverseResult.webSubmissionId,
-      });
-    }
   }
 
   try {
@@ -390,7 +397,9 @@ const contactHandler = withErrorBoundary(async (req: any) => {
       ok: true,
       mongoId,
       dataverse: dataverseResult,
-      ...((process.env.NODE_ENV === "development" || debugDataverse) &&
+      requestId: req.requestId,
+      ...((process.env.NODE_ENV === "development" ||
+        (debugDataverse && canExposeDebug)) &&
       dataverseErrorMessage
         ? {
             dataverseError: dataverseErrorMessage.substring(0, 2000),

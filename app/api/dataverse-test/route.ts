@@ -8,7 +8,21 @@ import { dataverseFetch } from "../../../lib/dataverse";
 
 export const runtime = "nodejs";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const debugToken = req.headers.get("x-debug-token") || "";
+  const allowed =
+    process.env.NODE_ENV === "development" ||
+    (!!process.env.DEBUG_API_TOKEN &&
+      debugToken === process.env.DEBUG_API_TOKEN);
+
+  // In production, do not expose this probe endpoint without an explicit token.
+  if (!allowed) {
+    return NextResponse.json(
+      { ok: false, error: "Not found" },
+      { status: 404 }
+    );
+  }
+
   try {
     const { data } = await dataverseFetch<Record<string, unknown>>("WhoAmI");
     return NextResponse.json({ ok: true, whoAmI: data });

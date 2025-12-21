@@ -10,8 +10,21 @@ export type AugmentedRequest = NextRequest & {
   ip?: string;
   userAgent?: string | null;
   startTime?: number;
+  requestId?: string;
   securityHeaders?: Record<string, string>;
 };
+
+function createRequestId(): string {
+  try {
+    // Node.js runtime (Next.js route handlers set runtime = "nodejs")
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const crypto = require("crypto") as typeof import("crypto");
+    return crypto.randomUUID();
+  } catch {
+    // Ultra-safe fallback
+    return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  }
+}
 
 class SimpleRateLimiter {
   private points: number;
@@ -100,6 +113,7 @@ export const withLogging = (): Middleware => (req) => {
   if (process.env.NODE_ENV === "development")
     console.log("[api]", req.method, req.nextUrl.pathname);
   req.startTime = Date.now();
+  req.requestId = req.requestId || createRequestId();
   req.ip = getClientIP(req);
   req.userAgent = req.headers.get("user-agent");
 };
@@ -156,6 +170,11 @@ export const composeRoute = (...middlewares: Middleware[]) => {
       Object.entries(augmented.securityHeaders).forEach(([k, v]) =>
         response!.headers.set(k, v)
       );
+
+    if (augmented.requestId) {
+      response!.headers.set("x-request-id", augmented.requestId);
+    }
+
     return response;
   };
 };
