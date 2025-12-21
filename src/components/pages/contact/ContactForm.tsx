@@ -156,7 +156,27 @@ export function ContactForm() {
         throw new Error(message);
       }
 
-      setStatus({ type: "success", message: "Message sent successfully!" });
+      // Even if the API returns 201, Dataverse sync can fail (Mongo is source of truth).
+      // Surface that to avoid a false "all good" message.
+      try {
+        const data: any = await res.json();
+        const dvStatus = data?.dataverse?.status;
+
+        if (dvStatus && dvStatus !== "ok") {
+          const base = `Saved locally, but CRM sync is ${dvStatus}.`;
+          const dvErr =
+            typeof data?.dataverseError === "string" ? data.dataverseError : "";
+          setStatus({
+            type: "error",
+            message: dvErr ? `${base} ${dvErr}` : base,
+          });
+        } else {
+          setStatus({ type: "success", message: "Message sent successfully!" });
+        }
+      } catch {
+        setStatus({ type: "success", message: "Message sent successfully!" });
+      }
+
       setFormData({
         firstName: "",
         lastName: "",

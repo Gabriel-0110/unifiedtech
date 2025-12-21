@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 function normalizeBaseUrl(raw: string): string {
   const trimmed = raw.trim();
   if (!trimmed) return trimmed;

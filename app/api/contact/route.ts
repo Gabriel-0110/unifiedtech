@@ -49,6 +49,39 @@ function looksLikeMissingColumnError(
   );
 }
 
+function looksLikeInvalidPropertyError(
+  err: unknown,
+  propertyName: string
+): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  const needle = propertyName.toLowerCase();
+  const hay = message.toLowerCase();
+
+  // Common Dataverse Web API messages:
+  // - "Invalid property 'foo' was found in entity ..."
+  // - "The property 'foo' does not exist on type ..."
+  // - "could not find a property named 'foo' on type ..."
+  return (
+    (hay.includes("invalid property") ||
+      hay.includes("does not exist on type") ||
+      hay.includes("could not find a property")) &&
+    hay.includes(needle)
+  );
+}
+
+function getWebSubmissionLeadLookupNavPropertyCandidates(): string[] {
+  // Allow overriding the navigation property/lookup logical name.
+  // Example values you might set:
+  // - ux_websubmission_lead
+  // - ux_websubmission_Lead
+  const raw = (process.env.DATAVERSE_WEB_SUBMISSION_LEAD_LOOKUP || "").trim();
+  if (raw) return [raw];
+
+  // Reasonable defaults based on your schema name in Power Apps.
+  // Dataverse Web API generally expects lowercase logical names.
+  return ["ux_websubmission_lead", "ux_websubmission_Lead"];
+}
+
 function isValidUs10OrE164Phone(input: string): boolean {
   const trimmed = input.trim();
   if (!trimmed) return false;
@@ -115,6 +148,7 @@ const contactHandler = withErrorBoundary(async (req: any) => {
   }
 
   const { validatedData } = req;
+  const debugDataverse = req.headers.get("x-debug-dataverse") === "1";
   const userAgent = req.headers.get("user-agent");
   const ip = req.ip;
 
@@ -196,6 +230,7 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     leadId?: string;
     status: "skipped" | "partial" | "ok" | "error";
   } = { status: "skipped" };
+  let dataverseErrorMessage: string | undefined;
 
   // Dataverse integration (best-effort; Mongo insert is the source of truth).
   // If env vars aren't configured, createWebSubmission/createLead will throw.
@@ -203,31 +238,31 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     const projectTypeChoice = resolveProjectType(contactData.projectType);
 
     const webSubmissionPayloadBase: Record<string, unknown> = {
-      ux_FirstName: contactData.firstName,
-      ux_LastName: contactData.lastName,
-      ux_Email: contactData.email,
-      ...(contactData.phone ? { ux_Phone: contactData.phone } : {}),
-      ...(contactData.company ? { ux_Company: contactData.company } : {}),
-      ux_ProjectDetails: contactData.message,
+      // Dataverse Web API requires lowercase logical names, not schema names.
+      ux_firstname: contactData.firstName,
+      ux_lastname: contactData.lastName,
+      ux_email: contactData.email,
+      ...(contactData.phone ? { ux_phone: contactData.phone } : {}),
+      ...(contactData.company ? { ux_company: contactData.company } : {}),
+      ux_projectdetails: contactData.message,
       ...(typeof projectTypeChoice === "number"
-        ? { ux_ProjectType: projectTypeChoice }
+        ? { ux_projecttype: projectTypeChoice }
         : {}),
-      ux_SMSOptIn: smsOptIn,
-      ...(smsOptIn ? { ux_SMSOptInTimestamp: createdAt.toISOString() } : {}),
-      ux_ConsentMethod: CONSENT_METHOD.WebForm,
-      ux_ConsentSourceURL: sourceUrl,
-      ux_ConsentStatementVersion: "v1",
-      ux_SourceSystem: SOURCE_SYSTEM.Website,
-      ux_SourceURL: sourceUrl,
-      ux_SubmittedAtUTC: createdAt.toISOString(),
-      ux_CRMStatus: CRM_STATUS.Pending,
-      ...(contactData.source ? { ux_UTMSource: contactData.source } : {}),
-      ...(contactData.medium ? { ux_UTMMedium: contactData.medium } : {}),
-      ...(contactData.campaign ? { ux_UTMCampaign: contactData.campaign } : {}),
+      ux_smsoptin: smsOptIn,
+      ...(smsOptIn ? { ux_smsoptintimestamp: createdAt.toISOString() } : {}),
+      ux_consentmethod: CONSENT_METHOD.WebForm,
+      ux_consentsourceurl: sourceUrl,
+      ux_consentstatementversion: "v1",
+      ux_sourcesystem: SOURCE_SYSTEM.Website,
+      ux_sourceurl: sourceUrl,
+      ux_submittedatutc: createdAt.toISOString(),
+      ux_crmsyncstatus: CRM_STATUS.Pending,
+      ...(contactData.source ? { ux_utmsource: contactData.source } : {}),
+      ...(contactData.medium ? { ux_utmmedium: contactData.medium } : {}),
+      ...(contactData.campaign ? { ux_utmcampaign: contactData.campaign } : {}),
     };
 
     // Include ux_mongoid if the column exists; otherwise omit (best-effort retry).
-    // NOTE: Dataverse logical name is lowercase (ux_mongoid).
     const webSubmissionPayload: any = { ...webSubmissionPayloadBase };
     if (mongoId) webSubmissionPayload.ux_mongoid = mongoId;
 
@@ -273,21 +308,62 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     dataverseResult.leadId = createdLead.id;
 
     // Update web submission record with CRM linkage.
-    await updateWebSubmission(webSubmissionId!, {
-      ux_CRMStatus: CRM_STATUS.LeadCreated,
-      ux_CRMRecordID: createdLead.id,
-    });
+    // Prefer the Lead lookup relationship (ux_websubmission_Lead) over a short text field.
+    // Lookups are set using the navigation property with @odata.bind.
+    const leadBindValue = `/leads(${createdLead.id})`;
+    const navCandidates = getWebSubmissionLeadLookupNavPropertyCandidates();
+
+    let updated = false;
+    let lastUpdateErr: unknown;
+    for (const nav of navCandidates) {
+      try {
+        await updateWebSubmission(webSubmissionId!, {
+          ux_crmsyncstatus: CRM_STATUS.LeadCreated,
+          [`${nav}@odata.bind`]: leadBindValue,
+        });
+        updated = true;
+        break;
+      } catch (e: unknown) {
+        lastUpdateErr = e;
+        if (looksLikeInvalidPropertyError(e, nav)) {
+          continue;
+        }
+        throw e;
+      }
+    }
+
+    // If none of the candidate nav property names worked, at least mark the submission
+    // as LeadCreated so we don't fail the whole Dataverse sync.
+    if (!updated) {
+      await updateWebSubmission(webSubmissionId!, {
+        ux_crmsyncstatus: CRM_STATUS.LeadCreated,
+      });
+
+      if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
+        console.warn("[contact] Lead lookup bind failed; set status only", {
+          webSubmissionId,
+          leadId: createdLead.id,
+          attemptedNavs: navCandidates,
+          error:
+            lastUpdateErr instanceof Error
+              ? lastUpdateErr.message
+              : String(lastUpdateErr),
+        });
+      }
+    }
 
     dataverseResult.status = "ok";
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
+    dataverseErrorMessage = message;
 
     // If we created a web submission, mark it as Error.
     if (dataverseResult.webSubmissionId) {
       try {
         await updateWebSubmission(dataverseResult.webSubmissionId, {
-          ux_CRMStatus: CRM_STATUS.Error,
-          ux_ErrorMessage: message.substring(0, 2000),
+          ux_crmsyncstatus: CRM_STATUS.Error,
+          ux_errormessage: message.substring(0, 2000),
         });
       } catch {}
 
@@ -314,6 +390,13 @@ const contactHandler = withErrorBoundary(async (req: any) => {
       ok: true,
       mongoId,
       dataverse: dataverseResult,
+      ...((process.env.NODE_ENV === "development" || debugDataverse) &&
+      dataverseErrorMessage
+        ? {
+            dataverseError: dataverseErrorMessage.substring(0, 2000),
+            nodeEnv: process.env.NODE_ENV,
+          }
+        : {}),
     },
     { status: 201 }
   );
