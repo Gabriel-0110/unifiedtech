@@ -303,7 +303,8 @@ const contactHandler = withErrorBoundary(async (req: any) => {
 
     const leadPayload: Record<string, unknown> = {
       subject: `Website Contact - ${contactData.projectType}`,
-      fullname: `${contactData.firstName} ${contactData.lastName}`.trim(),
+      firstname: contactData.firstName,
+      lastname: contactData.lastName,
       emailaddress1: contactData.email,
       ...(contactData.phone ? { mobilephone: contactData.phone } : {}),
       ...(contactData.company ? { companyname: contactData.company } : {}),
