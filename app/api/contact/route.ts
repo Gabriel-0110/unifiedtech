@@ -388,6 +388,29 @@ const contactHandler = withErrorBoundary(async (req: any) => {
     }
   }
 
+  // Persist Dataverse sync outcome for later inspection (best-effort).
+  // This helps diagnose production issues even when we don't expose error details to clients.
+  try {
+    await collection.updateOne(
+      { _id: insertResult.insertedId },
+      {
+        $set: {
+          dataverseSync: {
+            status: dataverseResult.status,
+            webSubmissionId: dataverseResult.webSubmissionId || null,
+            leadId: dataverseResult.leadId || null,
+            // Keep error text bounded.
+            error: dataverseErrorMessage
+              ? dataverseErrorMessage.substring(0, 2000)
+              : null,
+            requestId: req.requestId || null,
+            updatedAt: new Date(),
+          },
+        },
+      }
+    );
+  } catch {}
+
   try {
     await emailService.sendContactNotification(contactData);
   } catch {}

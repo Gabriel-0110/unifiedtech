@@ -1,6 +1,8 @@
 /**
  * Temporary smoke test endpoint.
- * Requires env vars: DATAVERSE_URL, AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET.
+ * Requires env vars: DATAVERSE_URL and Azure app credentials.
+ * Preferred: AZURE_TENANT_ID / AZURE_CLIENT_ID / AZURE_CLIENT_SECRET
+ * Fallback:  MS_TENANT_ID / MS_CLIENT_ID / MS_CLIENT_SECRET
  * Calls Dataverse WhoAmI to verify auth/permissions.
  */
 import { NextResponse } from "next/server";

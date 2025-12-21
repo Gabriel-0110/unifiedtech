@@ -8,15 +8,18 @@ function normalizeBaseUrl(raw: string): string {
 
 function getRequiredEnv() {
   const dataverseUrl = process.env.DATAVERSE_URL;
-  const tenantId = process.env.AZURE_TENANT_ID;
-  const clientId = process.env.AZURE_CLIENT_ID;
-  const clientSecret = process.env.AZURE_CLIENT_SECRET;
+  // Prefer AZURE_* for Dataverse (current naming), but support legacy MS_* vars
+  // since earlier iterations of the project used MS_* for Microsoft identity.
+  const tenantId = process.env.AZURE_TENANT_ID || process.env.MS_TENANT_ID;
+  const clientId = process.env.AZURE_CLIENT_ID || process.env.MS_CLIENT_ID;
+  const clientSecret =
+    process.env.AZURE_CLIENT_SECRET || process.env.MS_CLIENT_SECRET;
 
   const missing: string[] = [];
   if (!dataverseUrl) missing.push("DATAVERSE_URL");
-  if (!tenantId) missing.push("AZURE_TENANT_ID");
-  if (!clientId) missing.push("AZURE_CLIENT_ID");
-  if (!clientSecret) missing.push("AZURE_CLIENT_SECRET");
+  if (!tenantId) missing.push("AZURE_TENANT_ID (or MS_TENANT_ID)");
+  if (!clientId) missing.push("AZURE_CLIENT_ID (or MS_CLIENT_ID)");
+  if (!clientSecret) missing.push("AZURE_CLIENT_SECRET (or MS_CLIENT_SECRET)");
 
   if (missing.length) {
     throw new Error(
